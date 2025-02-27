@@ -4,9 +4,9 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<settings>
-		<setting name="logImpl" value="LOG4J" />
+		<setting name="logImpl" value="SLF4J" />
 	</settings>
 	<typeAliases>
-		<package name="com/a/pojo" />
+		<package name="com/a/easybuy/pojo" />
 	</typeAliases>
 </configuration>
