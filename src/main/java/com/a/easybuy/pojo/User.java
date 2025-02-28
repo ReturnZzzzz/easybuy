@@ -11,6 +11,7 @@ public class User {
   private String email;
   private String phone;
   private long role;
+  private boolean checked;
 
 
   public long getId() {
@@ -84,4 +85,11 @@ public class User {
     this.role = role;
   }
 
+  public boolean isChecked() {
+    return checked;
+  }
+
+  public void setChecked(boolean checked) {
+    this.checked = checked;
+  }
 }
