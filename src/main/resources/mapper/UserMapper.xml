@@ -6,20 +6,37 @@
     <select id="getByPage" resultType="User" parameterType="map">
         select * from user
         where role &gt; #{role}
+        and status =1
         limit #{start},#{end}
     </select>
-    <select id="getById">
+    <select id="getCount">
+        select count(1) from user
+        where role &gt; #{role}
+          and status =1
+    </select>
+    <select id="getById" parameterType="map">
         select * from  user
-        where id = #{id}
+        <where>
+            <if test="id!=null and id!=''">
+                id = #{id}
+            </if>
+            <if test="name!=nuill and name!=''">
+                name=#{name}
+            </if>
+            <if test="email!=mull">
+                email=#{email}
+            </if>
+        </where>
+          and status=1
     </select>
     <insert id="addUser" parameterType="User">
-        insert into user(name, password, email, phone, img_path, role) values (#{name},#{password},#{email},#{phone},#{img_path},#{role})
+        insert into user(name, password, email, phone, role,status) values (#{name},#{password},#{email},#{phone},#{role},1)
     </insert>
     <update id="updateUser" parameterType="User">
-            update user set name=#{name},password=#{password},email=#{email},phone=#{phone},img_path=#{img_path},role=#{role}
-                        where id=#{id}
+            update user set name=#{name},password=#{password},email=#{email},phone=#{phone},role=#{role}
+                        where id=#{id} and status=1
     </update>
-    <delete id="delUser">
-        delete from user where id=#{id}
-    </delete>
+    <update id="delUser">
+        update user set status=0 where id=#{id}
+    </update>
 </mapper>

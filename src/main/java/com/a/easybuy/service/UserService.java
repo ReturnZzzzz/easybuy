@@ -9,4 +9,5 @@ public interface UserService {
     public ResponseMessage checkUsername(String username);
     public ResponseMessage updateUser(User user);
     public ResponseMessage deleteUser(int id);
+    public ResponseMessage getUser(int id);
 }
