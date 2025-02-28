@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgc.easybuy.dao.InfoMapper">
+    <select id="getInfoList" resultType="Info">
+        select * from info
+    </select>
+    <insert id="addInfo">
+        insert into info(uid,title,content,createDate) values(#{uid},#{title},#{content},#{createDate})
+    </insert>
+    <delete id="delInfo">
+        delete from user where id=#{id}
+    </delete>
+    <select id="findInfo">
+        select * from info where id=#{id}
+    </select>
+</mapper>
