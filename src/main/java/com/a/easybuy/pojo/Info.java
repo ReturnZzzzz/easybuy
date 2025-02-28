@@ -4,10 +4,9 @@ package com.a.easybuy.pojo;
 public class Info {
 
   private long id;
-  private long uid;
   private String title;
   private String content;
-  private java.sql.Timestamp createDate;
+  private String createDate;
 
 
   public long getId() {
@@ -16,15 +15,6 @@ public class Info {
 
   public void setId(long id) {
     this.id = id;
-  }
-
-
-  public long getUid() {
-    return uid;
-  }
-
-  public void setUid(long uid) {
-    this.uid = uid;
   }
 
 
@@ -46,11 +36,11 @@ public class Info {
   }
 
 
-  public java.sql.Timestamp getCreateDate() {
+  public String getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(java.sql.Timestamp createDate) {
+  public void setCreateDate(String createDate) {
     this.createDate = createDate;
   }
 

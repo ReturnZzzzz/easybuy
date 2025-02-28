@@ -5,10 +5,11 @@ public class User {
 
   private long id;
   private String name;
+  private String userName;
   private String password;
+  private long sex;
   private String email;
   private String phone;
-  private String imgPath;
   private long role;
 
 
@@ -30,12 +31,30 @@ public class User {
   }
 
 
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+
   public String getPassword() {
     return password;
   }
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+
+  public long getSex() {
+    return sex;
+  }
+
+  public void setSex(long sex) {
+    this.sex = sex;
   }
 
 
@@ -54,15 +73,6 @@ public class User {
 
   public void setPhone(String phone) {
     this.phone = phone;
-  }
-
-
-  public String getImgPath() {
-    return imgPath;
-  }
-
-  public void setImgPath(String imgPath) {
-    this.imgPath = imgPath;
   }
 
 

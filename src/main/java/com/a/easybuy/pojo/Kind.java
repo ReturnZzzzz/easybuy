@@ -1,11 +1,13 @@
-package com.sample;
+package com.a.easybuy.pojo;
 
 
 public class Kind {
 
   private long id;
-  private long fid;
-  private String kname;
+  private String name;
+  private long pid;
+  private long type;
+  private String iconClass;
 
 
   public long getId() {
@@ -17,21 +19,39 @@ public class Kind {
   }
 
 
-  public long getFid() {
-    return fid;
+  public String getName() {
+    return name;
   }
 
-  public void setFid(long fid) {
-    this.fid = fid;
+  public void setName(String name) {
+    this.name = name;
   }
 
 
-  public String getKname() {
-    return kname;
+  public long getPid() {
+    return pid;
   }
 
-  public void setKname(String kname) {
-    this.kname = kname;
+  public void setPid(long pid) {
+    this.pid = pid;
+  }
+
+
+  public long getType() {
+    return type;
+  }
+
+  public void setType(long type) {
+    this.type = type;
+  }
+
+
+  public String getIconClass() {
+    return iconClass;
+  }
+
+  public void setIconClass(String iconClass) {
+    this.iconClass = iconClass;
   }
 
 }

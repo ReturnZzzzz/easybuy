@@ -1,22 +1,11 @@
 package com.a.easybuy.pojo;
 
 
-
-import java.util.List;
-
 public class Car {
 
   private long id;
   private long uid;
-  private List<Good> list;
 
-  public List<Good> getList() {
-    return list;
-  }
-
-  public void setList(List<Good> list) {
-    this.list = list;
-  }
 
   public long getId() {
     return id;

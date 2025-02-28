@@ -5,10 +5,10 @@ public class Address {
 
   private long id;
   private long uid;
-  private String area;
   private String address;
-  private String phone;
-  private String email;
+  private java.sql.Timestamp createDate;
+  private long isDefault;
+  private String remark;
 
 
   public long getId() {
@@ -29,15 +29,6 @@ public class Address {
   }
 
 
-  public String getArea() {
-    return area;
-  }
-
-  public void setArea(String area) {
-    this.area = area;
-  }
-
-
   public String getAddress() {
     return address;
   }
@@ -47,21 +38,30 @@ public class Address {
   }
 
 
-  public String getPhone() {
-    return phone;
+  public java.sql.Timestamp getCreateDate() {
+    return createDate;
   }
 
-  public void setPhone(String phone) {
-    this.phone = phone;
+  public void setCreateDate(java.sql.Timestamp createDate) {
+    this.createDate = createDate;
   }
 
 
-  public String getEmail() {
-    return email;
+  public long getIsDefault() {
+    return isDefault;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setIsDefault(long isDefault) {
+    this.isDefault = isDefault;
+  }
+
+
+  public String getRemark() {
+    return remark;
+  }
+
+  public void setRemark(String remark) {
+    this.remark = remark;
   }
 
 }
