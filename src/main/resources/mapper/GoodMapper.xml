@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.a.easybuy.dao.GoodMapper">
+    <select id="getByPage" resultType="Good">
+        select * from goods order by createDate DESC
+    </select>
+    <select id="getTotal">
+        select COUNT(1) from goods
+    </select>
+    <select id="getById" resultType="Good">
+        select * from goods where id=#{id}
+    </select>
+    <insert id="add" parameterType="Good">
+        insert into goods(id, gname, description, price, stock, img_path, gstatus, createdate)
+        values(#{id},#{gname},#{description},#{price},#{stock},#{img_path},#{gstatus},#{createdate})
+    </insert>
+    <update id="update" parameterType="Good">
+        update goods set gname=#{name},description=#{description=},price=#{price},stock=#{stock},img_path=#{img_path},goods.gstatus=1,createdate = #{createDate}
+        where id = #{id}
+    </update>
+    <update id="delete" parameterType="Good">
+        update goods set gstatus =1 where  id=#{id}
+    </update>
+
+</mapper>

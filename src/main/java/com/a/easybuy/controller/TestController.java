@@ -1,5 +1,4 @@
 package com.a.easybuy.controller;
 
-public class GoodController {
-
+public class TestController {
 }
