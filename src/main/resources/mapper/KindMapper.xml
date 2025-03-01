@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgc.easybuy.dao.KindMapper">
+    <select id="getKindList" resultType="Kind">
+        select * from kind where statu = 1
+    </select>
+    <insert id="addKind">
+        insert into kind(pid,kname) values(#{pid},#{kname})
+    </insert>
+    <update id="delKind">
+        update kind set statu = 0 where id=#{id}
+    </update>
+    <select id="getKindListByPid" resultType="kind">
+        select * from kind where pid = #{id}
+    </select>
+    <select id="getGoodListBykid" resultType="Good">
+        select * from goods where kid=#{id}
+    </select>
+</mapper>
