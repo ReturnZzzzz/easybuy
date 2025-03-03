@@ -10,4 +10,5 @@ public interface UserService {
     public ResponseMessage updateUser(User user);
     public ResponseMessage deleteUser(int id);
     public ResponseMessage getUser(int id);
+    public ResponseMessage getUserByEmail(String email);
 }
