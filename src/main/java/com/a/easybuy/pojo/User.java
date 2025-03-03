@@ -3,7 +3,7 @@ package com.a.easybuy.pojo;
 
 public class User {
 
-  private long id;
+  private Integer id;
   private String name;
   private String userName;
   private String password;
@@ -14,14 +14,13 @@ public class User {
   private boolean checked;
 
 
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
-
 
   public String getName() {
     return name;

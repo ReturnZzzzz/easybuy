@@ -4,14 +4,16 @@
 <mapper namespace="com.a.easybuy.dao.InfoMapper">
     <select id="getInfoList" resultType="Info">
         select * from info
+        where istatus=1
+        limit #{pageNow},#{pageSize}
     </select>
     <insert id="addInfo">
-        insert into info(title,content,createDate) values(#{title},#{content},#{createDate})
+        insert into info(title,content,createDate,istatus) values(#{title},#{content},#{createDate},1)
     </insert>
-    <delete id="delInfo">
-        delete from user where id=#{id}
-    </delete>
+    <update id="delInfo">
+        update info set istatus=0  where id=#{id}
+    </update>
     <select id="findInfo">
-        select * from info where id=#{id}
+        select * from info where id=#{id} and istatus=1
     </select>
 </mapper>
