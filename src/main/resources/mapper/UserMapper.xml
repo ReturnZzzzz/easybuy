@@ -14,7 +14,7 @@
         where role &gt; #{role}
           and status =1
     </select>
-    <select id="getById" parameterType="map">
+    <select id="getById" parameterType="map" resultType="User">
         select * from  user
         <where>
             <if test="id!=null and id!=''">

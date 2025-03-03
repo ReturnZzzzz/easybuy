@@ -6,10 +6,15 @@ import com.a.easybuy.pojo.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -18,12 +23,31 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserMapper userMapper;
+    @Qualifier("redisTemplate")
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public ResponseMessage login(String username, String password) {
         logger.info("login username:{} password:{}", username, password);
-
-        return null;
+        ResponseMessage responseMessage = new ResponseMessage();
+        Map<String,Object> param = new HashMap<>();
+        param.put("username",username);
+        User user = userMapper.getById(param);
+        if(user == null){
+            responseMessage.setCode("201");
+            responseMessage.setMsg("没有该用户");
+        }else {
+            if (user.getPassword().equals(password)) {
+                responseMessage.setCode("200");
+                responseMessage.setData(user);
+                redisTemplate.opsForValue().set(username+"/"+ UUID.randomUUID().toString(),username,30, TimeUnit.MINUTES);
+            }else {
+                responseMessage.setCode("201");
+                responseMessage.setMsg("密码错误");
+            }
+        }
+        return responseMessage;
     }
 
     @Override
@@ -77,12 +101,38 @@ public class UserServiceImpl implements UserService{
         }else {
             responseMessage.setCode("201");
         }
-        return null;
+        return responseMessage;
     }
 
     @Override
     public ResponseMessage getUser(int id) {
-        return null;
+        logger.info("get User:"+id);
+        ResponseMessage responseMessage = new ResponseMessage();
+        HashMap map = new HashMap();
+        map.put("id", id);
+        User user = userMapper.getById(map);
+        if(user != null){
+            responseMessage.setCode("200");
+            responseMessage.setData(user);
+        }else {
+            responseMessage.setCode("201");
+        }
+        return responseMessage;
     }
 
+    @Override
+    public ResponseMessage getUserByEmail(String email) {
+        logger.info("getUser email:"+email);
+        ResponseMessage responseMessage = new ResponseMessage();
+        HashMap map = new HashMap();
+        map.put("email", email);
+        User user =userMapper.getById(map);
+        if(user!=null){
+            responseMessage.setCode("200");
+            responseMessage.setData(user);
+        }else {
+            responseMessage.setCode("201");
+        }
+        return responseMessage;
+    }
 }
