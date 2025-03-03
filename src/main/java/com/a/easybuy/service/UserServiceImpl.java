@@ -28,11 +28,11 @@ public class UserServiceImpl implements UserService{
     private RedisTemplate redisTemplate;
 
     @Override
-    public ResponseMessage login(String username, String password) {
-        logger.info("login username:{} password:{}", username, password);
+    public ResponseMessage login(String userName, String password) {
+        logger.info("login userName:{} password:{}", userName, password);
         ResponseMessage responseMessage = new ResponseMessage();
         Map<String,Object> param = new HashMap<>();
-        param.put("username",username);
+        param.put("username",userName);
         User user = userMapper.getById(param);
         if(user == null){
             responseMessage.setCode("201");
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService{
             if (user.getPassword().equals(password)) {
                 responseMessage.setCode("200");
                 responseMessage.setData(user);
-                redisTemplate.opsForValue().set(username,user.getId(),30, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(userName,user.getId(),30, TimeUnit.MINUTES);
             }else {
                 responseMessage.setCode("201");
                 responseMessage.setMsg("密码错误");
