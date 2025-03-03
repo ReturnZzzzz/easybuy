@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService{
             if (user.getPassword().equals(password)) {
                 responseMessage.setCode("200");
                 responseMessage.setData(user);
-                redisTemplate.opsForValue().set(username+"/"+ UUID.randomUUID().toString(),username,30, TimeUnit.MINUTES);
+                redisTemplate.opsForValue().set(username,user.getId(),30, TimeUnit.MINUTES);
             }else {
                 responseMessage.setCode("201");
                 responseMessage.setMsg("密码错误");
