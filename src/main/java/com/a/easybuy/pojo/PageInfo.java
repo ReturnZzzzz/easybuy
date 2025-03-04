@@ -31,7 +31,7 @@ public class PageInfo<E>{
 
     public void setTotal(int total) {
         if(total > 0){
-            this.pages = total%this.pageSize == 0 ? total / this.pageSize:total/pageSize -1;
+            this.pages = total%this.pageSize == 0 ? total / this.pageSize:total/pageSize +1;
         }
         this.total = total;
     }
@@ -50,5 +50,16 @@ public class PageInfo<E>{
 
     public void setList(List<E> list) {
         this.list = list;
+    }
+
+    @Override
+    public String toString() {
+        return "PageInfo{" +
+                "pageNow=" + pageNow +
+                ", pageSize=" + pageSize +
+                ", total=" + total +
+                ", pages=" + pages +
+                ", list=" + list +
+                '}';
     }
 }

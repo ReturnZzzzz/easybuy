@@ -4,7 +4,6 @@ import com.a.easybuy.pojo.Bill;
 import com.a.easybuy.pojo.ResponseMessage;
 import com.a.easybuy.service.AlipayService;
 import com.a.easybuy.service.BillService;
-import com.alipay.api.domain.BillInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +30,44 @@ public class AlipayController {
     @Autowired
     private BillService billService;
 
+    @RequestMapping("/createOrder")
+    @ResponseBody
+    @CrossOrigin("http://localhost:8080")
+    public void createOrder(HttpServletResponse response,String price,String Subject) {
+        logger.info("AlipayController createOrder start...");
+        try {
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter pw = response.getWriter();
+            ResponseMessage msg = alipayService.createOrder(Subject,price);
+            logger.debug("AlipayController createOrder result:" + msg);
+            if ("200".equals(msg.getCode())) {
+                pw.write((String) (msg.getData()));
+            }
+            pw.close();
+        } catch (IOException e) {
+            logger.error("AlipayController createOrder is error...");
+            throw new RuntimeException(e);
+        }
+    }
+
     @RequestMapping("/charge")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
-    public ResponseMessage charge(String phoneNumber,String price) {
-       logger.info("charge phoneNumber:{},price:{}", phoneNumber, price);
-       ResponseMessage responseMessage = alipayService.createOrder(phoneNumber+"充值"+price+"元",price);
-       return responseMessage;
+    public void charge(HttpServletResponse response,String price,String phoneNumber) {
+        logger.info("AlipayController createOrder start...");
+        try {
+            response.setContentType("text/html;charset=utf-8");
+            PrintWriter pw = response.getWriter();
+            ResponseMessage msg = alipayService.createOrder(phoneNumber+"充值"+price+"元",price);
+            logger.debug("AlipayController createOrder result:" + msg);
+            if ("200".equals(msg.getCode())) {
+                pw.write((String) (msg.getData()));
+            }
+            pw.close();
+        } catch (IOException e) {
+            logger.error("AlipayController createOrder is error...");
+            throw new RuntimeException(e);
+        }
     }
 
     @RequestMapping("/notify")

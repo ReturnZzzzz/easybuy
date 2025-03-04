@@ -11,6 +11,5 @@ public interface KindService {
     ResponseMessage delKind(Integer id);
     Boolean isDel(Integer pid);
     Boolean goodListByKid(Integer id);
-    List<Kind> makeKindLevel();
-    List<Kind> makePidName();
+    List<Kind> getCategoryTree();
 }

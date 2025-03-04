@@ -1,15 +1,18 @@
 package com.a.easybuy.pojo;
 
 
+import java.math.BigDecimal;
+
 public class Good {
 
   private long id;
   private String gname;
   private String description;
-  private double price;
+  private BigDecimal price;
   private long stock;
   private String imgPath;
   private long gstatus;
+  private Integer kid;
 
 
   public long getId() {
@@ -39,15 +42,6 @@ public class Good {
   }
 
 
-  public double getPrice() {
-    return price;
-  }
-
-  public void setPrice(double price) {
-    this.price = price;
-  }
-
-
   public long getStock() {
     return stock;
   }
@@ -74,4 +68,33 @@ public class Good {
     this.gstatus = gstatus;
   }
 
+  public BigDecimal getPrice() {
+    return price;
+  }
+
+  public void setPrice(BigDecimal price) {
+    this.price = price;
+  }
+
+  public Integer getKid() {
+    return kid;
+  }
+
+  public void setKid(Integer kid) {
+    this.kid = kid;
+  }
+
+  @Override
+  public String toString() {
+    return "Good{" +
+            "id=" + id +
+            ", gname='" + gname + '\'' +
+            ", description='" + description + '\'' +
+            ", price=" + price +
+            ", stock=" + stock +
+            ", imgPath='" + imgPath + '\'' +
+            ", gstatus=" + gstatus +
+            ", kid=" + kid +
+            '}';
+  }
 }

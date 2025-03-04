@@ -25,7 +25,7 @@ public class EmailController {
         emailService.sendSimpleMail(
                 "1290666022@qq.com",
                 "测试简单邮件",
-                "这是一封测试邮件，来自Spring Boot应用"
+                "111"
         );
         return "简单邮件已发送";
     }

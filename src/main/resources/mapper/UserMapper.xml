@@ -26,8 +26,8 @@
             <if test="email!=mull">
                 email=#{email}
             </if>
+            and status=1
         </where>
-          and status=1
     </select>
     <insert id="addUser" parameterType="User">
         insert into user(name, password, email, phone, role,status) values (#{name},#{password},#{email},#{phone},#{role},1)

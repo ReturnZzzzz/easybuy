@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class KindServiceImpl implements KindService {
@@ -91,12 +92,32 @@ private KindMapper kindMapper;
     }
 
     @Override
-    public List<Kind> makeKindLevel() {
-        return null;
-    }
+    public List<Kind> getCategoryTree() {
+        // 1. 查询所有分类
+        List<Kind> allKinds = kindMapper.getKindList();
 
-    @Override
-    public List<Kind> makePidName() {
-        return null;
+        // 2. 构建分类树
+        List<Kind> level1 = allKinds.stream()
+                .filter(k -> k.getPid() == 0)
+                .peek(l1 -> {
+                    // 找二级分类
+                    List<Kind> level2 = allKinds.stream()
+                            .filter(l2 -> l2.getPid()==(l1.getId()))
+                            .peek(l2 -> {
+                                // 找三级分类并关联商品
+                                List<Kind> level3 = allKinds.stream()
+                                        .filter(l3 -> l3.getPid()==(l2.getId()))
+                                        .peek(l3 -> l3.setProducts(
+                                                kindMapper.getGoodListBykid(l3.getId()) // 查商品
+                                        ))
+                                        .collect(Collectors.toList());
+                                l2.setChildren(level3);
+                            })
+                            .collect(Collectors.toList());
+                    l1.setChildren(level2);
+                })
+                .collect(Collectors.toList());
+
+        return level1;
     }
 }

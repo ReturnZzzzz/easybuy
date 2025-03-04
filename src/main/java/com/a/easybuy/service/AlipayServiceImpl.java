@@ -28,10 +28,10 @@ public class AlipayServiceImpl implements AlipayService{
 
     @Autowired
     private AlipayUtil alipayUtil;
+
     @Override
-    public ResponseMessage createOrder(String subject,String Amount) {
-        logger.info("createOrder is start...");
-        ResponseMessage message = new ResponseMessage();
+    public ResponseMessage createOrder(String subject,String price) {
+        ResponseMessage responseMessage = new ResponseMessage();
         try {
             // 初始化SDK
             AlipayClient alipayClient = new DefaultAlipayClient(alipayUtil.getAlipayConfig());
@@ -41,37 +41,29 @@ public class AlipayServiceImpl implements AlipayService{
             // 设置商户订单号
             model.setOutTradeNo(UUID.randomUUID().toString());
             // 设置订单总金额
-            model.setTotalAmount(Amount);
+            model.setTotalAmount(price);
             // 设置订单标题
             model.setSubject(subject);
-            // 设置产品码
+            // 设置产品码（固定）
             model.setProductCode("FAST_INSTANT_TRADE_PAY");
+            request.setReturnUrl(alipay.getReturnUrl());
+            request.setNotifyUrl(alipay.getNotifyUrl());
             request.setBizModel(model);
-            // 第三方代调用模式下请设置app_auth_token
-            // request.putOtherTextParam("app_auth_token", "<-- 请填写应用授权令牌 -->");
             AlipayTradePagePayResponse response = alipayClient.pageExecute(request, "POST");
-            // 如果需要返回GET请求，请使用
-            // AlipayTradePagePayResponse response = alipayClient.pageExecute(request, "GET");
-            String pageRedirectionData = response.getBody();
+            String pageRedirectionData = response.getBody();//获取支付宝响应的html支付页面
             System.out.println(pageRedirectionData);
-            // sdk版本是"4.38.0.ALL"及以上,可以参考下面的示例获取诊断链接
-            // String diagnosisUrl = DiagnosisUtils.getDiagnosisUrl(response);
-            // System.out.println(diagnosisUrl);
             if (response.isSuccess()) {
-                message.setCode("200");
-                message.setData(pageRedirectionData);
-                logger.debug("createOrder success request:"+request+",pageRedirectionData:"+pageRedirectionData);
                 System.out.println("调用成功");
+                responseMessage.setCode("200");
+                responseMessage.setData(pageRedirectionData);
             } else {
-                message.setCode("201");
-                message.setData(response.getMsg());
-                logger.error("createOrder error request:"+request+",pageRedirectionData:"+pageRedirectionData);
+                System.out.println("调用失败");
+                responseMessage.setCode("201");
             }
         }catch (Exception e){
-            message.setCode("500");
-            logger.error("AlipayServiceImpl createOrder error:"+e);
+            e.printStackTrace();
         }
-        return message;
+        return responseMessage;
     }
 
     @Override

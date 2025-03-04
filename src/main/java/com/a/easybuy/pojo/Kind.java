@@ -1,20 +1,39 @@
 package com.a.easybuy.pojo;
 
 
+import java.util.List;
+
 public class Kind {
 
-  private long id;
+  private Integer id;
   private String name;
   private long pid;
   private long type;
   private String iconClass;
+  private List<Kind> children;
+  private List<Good> products;
 
+  public List<Kind> getChildren() {
+    return children;
+  }
 
-  public long getId() {
+  public void setChildren(List<Kind> children) {
+    this.children = children;
+  }
+
+  public List<Good> getProducts() {
+    return products;
+  }
+
+  public void setProducts(List<Good> products) {
+    this.products = products;
+  }
+
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

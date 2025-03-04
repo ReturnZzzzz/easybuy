@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -68,9 +67,9 @@ public class UserServiceImpl implements UserService{
         logger.info("check username:"+username);
         HashMap map = new HashMap();
         map.put("username", username);
-        List<User> userList =userMapper.getByPage(map);
+        User user =userMapper.getById(map);
         ResponseMessage responseMessage = new ResponseMessage();
-        if(userList.size()>0){
+        if(user!=null){
             responseMessage.setCode("201");
         }else {
             responseMessage.setCode("200");
