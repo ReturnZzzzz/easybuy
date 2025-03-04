@@ -2,7 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.a.easybuy.dao.GoodMapper">
-    <select id="getByPage" resultType="Good">
+    <select id="getAll" resultType="Good" parameterType="GoodsQuery">
         select * from goods 
         <where>
             <if test="kid!=null and kid!=''">
@@ -13,7 +13,13 @@
         order by createDate DESC
     </select>
     <select id="getTotal">
-        select COUNT(1) from goods where gstatus = 1
+        select COUNT(1) from goods
+        <where>
+            <if test="kid!=null and kid!=''">
+                kid=#{kid}
+            </if>
+            and gstatus = 1
+        </where>
     </select>
     <select id="getById" resultType="Good">
         select * from goods where id=#{id}
@@ -26,7 +32,7 @@
         update goods set gname=#{name},description=#{description=},price=#{price},stock=#{stock},img_path=#{img_path},goods.gstatus=1,createdate = #{createDate}
         where id = #{id} and gstatus=1
     </update>
-    <update id="delete" parameterType="Good">
+    <update id="delete" >
         update goods set gstatus = 0  where  id=#{id}
     </update>
 

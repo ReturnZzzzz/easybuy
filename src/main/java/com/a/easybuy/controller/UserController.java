@@ -48,4 +48,22 @@ public class UserController {
         logger.debug("userService check username:" + username);
         return responseMessage;
     }
+    @RequestMapping("update")
+    @ResponseBody
+    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage update(User user) {
+        logger.info("update user:" + user);
+        ResponseMessage responseMessage = userService.updateUser(user);
+        logger.debug("userService update user:" + user);
+        return responseMessage;
+    }
+    @RequestMapping("del")
+    @ResponseBody
+    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage del(int id) {
+        logger.info("del user:" + id);
+        ResponseMessage responseMessage = userService.deleteUser(id);
+        logger.debug("userService del user:" + id);
+        return responseMessage;
+    }
 }
