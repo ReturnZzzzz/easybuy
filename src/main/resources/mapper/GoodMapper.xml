@@ -27,7 +27,7 @@
         where id = #{id} and gstatus=1
     </update>
     <update id="delete" parameterType="Good">
-        update goods set gstatus = 0 where  id=#{id}
+        update goods set gstatus = 0  where  id=#{id}
     </update>
 
 </mapper>
