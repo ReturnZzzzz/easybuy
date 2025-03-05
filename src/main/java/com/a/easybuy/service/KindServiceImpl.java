@@ -39,6 +39,20 @@ private KindMapper kindMapper;
     }
 
     @Override
+    public ResponseMessage getAll() {
+        logger.info("KindServiceImpl  getAll start..");
+        ResponseMessage rm = new ResponseMessage();
+        List<Kind> kindList = kindMapper.getKindList();
+        if (kindList != null && kindList.size() > 0) {
+            rm.setData(kindList);
+            rm.setCode("200");
+        }else {
+            rm.setCode("201");
+        }
+        return rm;
+    }
+
+    @Override
     public ResponseMessage addKind(Kind kind) {
         return null;
     }

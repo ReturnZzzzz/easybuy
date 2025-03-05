@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +27,16 @@ public class GoodServiceImpl implements  GoodService {
     @Override
     public ResponseMessage addGood(Good good) {
         logger.info("addGood good:"+good);
+        good.setCreatedate(new Date());
         ResponseMessage responseMessage = new ResponseMessage();
         int count = goodMapper.add(good);
         logger.debug("goodMapper add good:"+good+", count:"+count);
         if(count>0){
             responseMessage.setCode("200");
+            responseMessage.setMsg("添加成功");
         }else {
             responseMessage.setCode("201");
+            responseMessage.setMsg("添加失败");
         }
         return responseMessage;
     }

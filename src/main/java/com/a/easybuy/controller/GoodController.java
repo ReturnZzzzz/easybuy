@@ -64,4 +64,13 @@ public class GoodController {
         logger.debug("goodService.delGood"+responseMessage);
         return responseMessage;
     }
+    @RequestMapping("getGood")
+    @ResponseBody
+    @CrossOrigin
+    public ResponseMessage getGood(Integer id) {
+        logger.info("goodService.getGood"+id);
+        ResponseMessage responseMessage = goodService.getGood(id);
+        logger.debug("goodService.getGood"+responseMessage);
+        return responseMessage;
+    }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface KindService {
     ResponseMessage getKindList(Integer pageNow,Integer pageSize);
+    ResponseMessage getAll();
     ResponseMessage addKind(Kind kind);
     ResponseMessage delKind(Integer id);
     Boolean isDel(Integer pid);
