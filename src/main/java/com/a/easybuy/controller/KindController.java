@@ -22,7 +22,13 @@ public class KindController {
         logger.info("KindController getKindList start...pageNow:"+pageNow+"pageSize:"+pageSize);
         return kindService.getKindList(Integer.parseInt(pageNow),Integer.parseInt(pageSize));
     }
-
+    @RequestMapping("getAll")
+    @ResponseBody
+    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage getAll(){
+        logger.info("KindController getAll start.");
+        return kindService.getAll();
+    }
     @RequestMapping("delKind")
     @ResponseBody
     public ResponseMessage delKind(String id){

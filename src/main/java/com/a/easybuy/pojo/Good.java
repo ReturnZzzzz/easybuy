@@ -2,6 +2,7 @@ package com.a.easybuy.pojo;
 
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Good {
 
@@ -13,7 +14,15 @@ public class Good {
   private String imgPath;
   private long gstatus;
   private Integer kid;
+  private Date createdate;
 
+  public Date getCreatedate() {
+    return createdate;
+  }
+
+  public void setCreatedate(Date createdate) {
+    this.createdate = createdate;
+  }
 
   public long getId() {
     return id;
