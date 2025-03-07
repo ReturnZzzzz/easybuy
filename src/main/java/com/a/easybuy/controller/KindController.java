@@ -24,10 +24,24 @@ public class KindController {
     }
     @RequestMapping("getAll")
     @ResponseBody
-    @CrossOrigin("http://localhost:8080")
+//    @CrossOrigin("http://localhost:8080")
     public ResponseMessage getAll(){
         logger.info("KindController getAll start.");
         return kindService.getAll();
+    }
+    @RequestMapping("getAllFirst")
+    @ResponseBody
+//    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage getAllFirst(){
+        logger.info("KindController getAllFirst start.");
+        return kindService.getAllFirst();
+    }
+    @RequestMapping("getNext")
+    @ResponseBody
+//    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage getNext(Integer pid){
+        logger.info("KindController getAllFirst start.");
+        return kindService.getNext(pid);
     }
     @RequestMapping("delKind")
     @ResponseBody

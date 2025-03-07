@@ -13,4 +13,6 @@ public interface KindService {
     Boolean isDel(Integer pid);
     Boolean goodListByKid(Integer id);
     List<Kind> getCategoryTree();
+    ResponseMessage getAllFirst();
+    ResponseMessage getNext(Integer pid);
 }

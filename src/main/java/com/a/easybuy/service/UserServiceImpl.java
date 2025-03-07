@@ -1,8 +1,11 @@
 package com.a.easybuy.service;
 
 import com.a.easybuy.dao.UserMapper;
+import com.a.easybuy.pojo.PageInfo;
 import com.a.easybuy.pojo.ResponseMessage;
 import com.a.easybuy.pojo.User;
+import com.a.easybuy.pojo.UserQuery;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +53,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ResponseMessage register(User user) {
-        logger.info("register User:"+user);
-        int count = userMapper.addUser(user);
+    public ResponseMessage register(User user,String testCode) {
+        logger.info("register User:"+user+"testCode:"+testCode);
         ResponseMessage responseMessage = new ResponseMessage();
+        if (redisTemplate.opsForValue().get("redisKey"+testCode) == null){
+            responseMessage.setCode("202");
+            return responseMessage;
+        }
+        int count = userMapper.addUser(user);
         if(count>0){
             responseMessage.setCode("200");
         }else {
@@ -73,6 +80,29 @@ public class UserServiceImpl implements UserService{
             responseMessage.setCode("201");
         }else {
             responseMessage.setCode("200");
+        }
+        return responseMessage;
+    }
+
+    @Override
+    public ResponseMessage getByPage(UserQuery userQuery,Integer pageNow, Integer pageSize) {
+        logger.info("getByPage pageNow:"+pageNow+"pageSize:"+pageSize+"userQuery:"+userQuery);
+        ResponseMessage responseMessage = new ResponseMessage();
+        PageHelper.startPage(pageNow, pageSize);
+        List<User> list = userMapper.getAll(userQuery);
+        PageHelper.clearPage();
+        if(list.size()>0){
+            responseMessage.setCode("200");
+            PageInfo<User> pageInfo = new PageInfo<>();
+            pageInfo.setList(list);
+            pageInfo.setPageNow(pageNow);
+            pageInfo.setPageSize(pageSize);
+            Map<String,Object> params= new HashMap<>();
+            params.put("role",userQuery.getRole());
+            pageInfo.setTotal(userMapper.getCount(params));
+            responseMessage.setData(pageInfo);
+        }else {
+            responseMessage.setCode("201");
         }
         return responseMessage;
     }

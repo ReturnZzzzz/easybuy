@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -133,5 +134,25 @@ private KindMapper kindMapper;
                 .collect(Collectors.toList());
 
         return level1;
+    }
+
+    @Override
+    public ResponseMessage getAllFirst() {
+        logger.info("KindServiceImpl  getAllFirst start..");
+        List<Kind> list = kindMapper.getKindListByPid(0);
+        ResponseMessage rm = new ResponseMessage();
+        rm.setCode("200");
+        rm.setData(list);
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage getNext(Integer pid) {
+        logger.info("KindServiceImpl  getNext start.. id:"+pid);
+        ResponseMessage rm = new ResponseMessage();
+        List<Kind> kindList = kindMapper.getKindListByPid(pid);
+        rm.setCode("200");
+        rm.setData(kindList);
+        return rm;
     }
 }

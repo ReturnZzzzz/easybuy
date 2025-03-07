@@ -4,6 +4,7 @@ import com.a.easybuy.pojo.Good;
 import com.a.easybuy.pojo.GoodsQuery;
 import com.a.easybuy.pojo.ResponseMessage;
 import com.a.easybuy.service.GoodService;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("good")
@@ -48,8 +54,28 @@ public class GoodController {
     @RequestMapping("add")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
-    public ResponseMessage addGood(Good good) {
+    public ResponseMessage addGood(Good good,@RequestParam(value = "pic", required = false) MultipartFile mf)  throws IllegalStateException, IOException {
         logger.info("goodService.addGood"+good);
+        if (!mf.isEmpty()) {
+            String fileName = mf.getOriginalFilename();
+            String extension = FilenameUtils.getExtension(fileName);
+            String[] fileExtensionArr = { "jpg", "gif", "png" };
+            boolean isOk = false;
+            for (String fileExtension : fileExtensionArr) {
+                if (fileExtension.equals(extension)) {
+                    isOk = true;
+                    break;
+                }
+            }
+            if (!isOk) {
+                ResponseMessage responseMessage = new ResponseMessage();
+                responseMessage.setCode("300");
+                return responseMessage;
+            }
+            String newFileName = UUID.randomUUID() + "." + extension;
+            good.setImgPath(newFileName);
+            mf.transferTo(new File("D:" + File.separator + "image" + File.separator + newFileName));
+        }
         ResponseMessage responseMessage =goodService.addGood(good);
         logger.debug("goodService.addGood"+responseMessage);
         return responseMessage;
