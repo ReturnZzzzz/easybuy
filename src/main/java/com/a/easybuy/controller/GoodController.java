@@ -4,6 +4,7 @@ import com.a.easybuy.pojo.Good;
 import com.a.easybuy.pojo.GoodsQuery;
 import com.a.easybuy.pojo.ResponseMessage;
 import com.a.easybuy.service.GoodService;
+import io.micrometer.core.instrument.util.StringUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 @Controller
@@ -54,7 +59,7 @@ public class GoodController {
     @RequestMapping("add")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
-    public ResponseMessage addGood(Good good,@RequestParam(value = "pic", required = false) MultipartFile mf)  throws IllegalStateException, IOException {
+    public ResponseMessage addGood(Good good,@RequestParam(value = "file", required = false) MultipartFile mf)  throws IllegalStateException, IOException {
         logger.info("goodService.addGood"+good);
         if (!mf.isEmpty()) {
             String fileName = mf.getOriginalFilename();
@@ -98,5 +103,23 @@ public class GoodController {
         ResponseMessage responseMessage = goodService.getGood(id);
         logger.debug("goodService.getGood"+responseMessage);
         return responseMessage;
+    }
+
+    @RequestMapping(value = "downloadFile")
+    public void downloadFile(String picPath, HttpServletResponse resp) throws IOException {
+        if(StringUtils.isNotBlank(picPath)) {
+            File file = new File("D:\\image\\" + picPath);
+            if(file.exists()) {
+                InputStream is = new FileInputStream(file);
+                ServletOutputStream outputStream = resp.getOutputStream();
+                byte b[] = new byte[1024];
+                int n;
+                while((n=is.read(b))!=-1) {
+                    outputStream.write(b,0,n);
+                }
+                outputStream.close();
+                is.close();
+            }
+        }
     }
 }

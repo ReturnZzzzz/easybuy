@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService{
     public ResponseMessage checkUsername(String username) {
         logger.info("check username:"+username);
         HashMap map = new HashMap();
-        map.put("username", username);
+        map.put("name", username);
         User user =userMapper.getById(map);
         ResponseMessage responseMessage = new ResponseMessage();
         if(user!=null){

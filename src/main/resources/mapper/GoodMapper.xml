@@ -25,11 +25,11 @@
         select * from goods where id=#{id}
     </select>
     <insert id="add" parameterType="Good">
-        insert into goods( gname, description, price, stock, img_path, createdate,gstatus,kid)
+        insert into goods( gname, description, price, stock, imgPath, createdate,gstatus,kid)
         values(#{gname},#{description},#{price},#{stock},#{imgPath},#{createdate},1,#{kid})
     </insert>
     <update id="update" parameterType="Good">
-        update goods set gname=#{name},description=#{description=},price=#{price},stock=#{stock},img_path=#{imgPath},createdate = #{createDate}
+        update goods set gname=#{name},description=#{description=},price=#{price},stock=#{stock},imgPath=#{imgPath},createdate = #{createDate}
         where id = #{id} and gstatus=1
     </update>
     <update id="delete" >

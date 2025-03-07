@@ -41,13 +41,13 @@ public class UserController {
         logger.debug("userService register user:" + user);
         return responseMessage;
     }
-    @RequestMapping("check")
+    @RequestMapping("checkName")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
-    public ResponseMessage check(String username) {
-        logger.info("check username:" + username);
-        ResponseMessage responseMessage = userService.checkUsername(username);
-        logger.debug("userService check username:" + username);
+    public ResponseMessage checkName(String name) {
+        logger.info("check username:" + name);
+        ResponseMessage responseMessage = userService.checkUsername(name);
+        logger.debug("userService check username:" + name);
         return responseMessage;
     }
 

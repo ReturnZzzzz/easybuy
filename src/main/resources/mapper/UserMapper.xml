@@ -17,13 +17,13 @@
         select * from  user
         <where>
             <if test="id!=null and id!=''">
-                id = #{id}
+                and id = #{id}
             </if>
-            <if test="name!=nuill and name!=''">
-                name=#{name}
+            <if test="name!=null and name!=''">
+                and name=#{name}
             </if>
-            <if test="email!=mull">
-                email=#{email}
+            <if test="email!=null">
+                and email=#{email}
             </if>
             and status=1
         </where>
