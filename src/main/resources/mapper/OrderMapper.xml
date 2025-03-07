@@ -1,0 +1,21 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.a.easybuy.dao.OrderMapper">
+    <select id="getAll" resultType="Order">
+        select * from `order`
+    </select>
+    <select id="getCount" resultType="int">
+        select count(1) from `order`
+    </select>
+    <select id="getOne" resultType="Order">
+        select * from `order` where id = #{id}
+    </select>
+    <insert id="create" parameterType="Order">
+        insert into `order`(uid,loginName, adress, createDate, total, orderCode, status)
+        values (#{uid},#{loginName},#{adress},#{createDate},#{total},#{orderCode},1)
+    </insert>
+    <update id="update" parameterType="map">
+        update `order` set status = #{status} where id=#{id} and status=1
+    </update>
+</mapper>

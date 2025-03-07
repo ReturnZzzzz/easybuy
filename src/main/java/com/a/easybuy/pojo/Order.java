@@ -1,16 +1,18 @@
 package com.a.easybuy.pojo;
 
 
+import java.util.Date;
+
 public class Order {
 
   private long id;
   private long uid;
   private String loginName;
   private String adress;
-  private java.sql.Timestamp createDate;
+  private Date createDate;
   private double total;
   private String orderCode;
-
+  private int status;
 
   public long getId() {
     return id;
@@ -48,14 +50,13 @@ public class Order {
   }
 
 
-  public java.sql.Timestamp getCreateDate() {
+  public Date getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(java.sql.Timestamp createDate) {
+  public void setCreateDate(Date createDate) {
     this.createDate = createDate;
   }
-
 
   public double getTotal() {
     return total;
@@ -74,4 +75,25 @@ public class Order {
     this.orderCode = orderCode;
   }
 
+  public int getStatus() {
+    return status;
+  }
+
+  public void setStatus(int status) {
+    this.status = status;
+  }
+
+  @Override
+  public String toString() {
+    return "Order{" +
+            "id=" + id +
+            ", uid=" + uid +
+            ", loginName='" + loginName + '\'' +
+            ", adress='" + adress + '\'' +
+            ", createDate=" + createDate +
+            ", total=" + total +
+            ", orderCode='" + orderCode + '\'' +
+            ", status=" + status +
+            '}';
+  }
 }
