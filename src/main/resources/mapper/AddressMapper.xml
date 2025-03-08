@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.a.easybuy.dao.AddressMapper">
+    <select id="getAddressList" resultType="Address">
+        select * from address where uid=#{uid}
+    </select>
+    <delete id="delAddress">
+        delete from address
+        where id=#{id}
+        and uid=#{uid}
+    </delete>
+    <update id="changeAddress">
+        update address set address=#{address},remark=#{remark},area=#{area},name=#{name},email=#{email},phone=#{phone} where id=#{id}
+    </update>
+    <select id="findAddressById" resultType="Address">
+        select * from address where id=#{id} and uid=#{uid}
+    </select>
+</mapper>

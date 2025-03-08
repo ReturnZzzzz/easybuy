@@ -13,4 +13,5 @@ public interface GoodMapper {
     public int update(Good goods);
     public int delete(Integer id);
     public Good getById(Map<String,Object> params);
+    Good getGoodById(Integer id);
 }

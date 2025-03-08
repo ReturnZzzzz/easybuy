@@ -3,35 +3,32 @@ package com.a.easybuy.pojo;
 
 public class Like {
 
-  private long id;
-  private long uid;
-  private long gid;
+  private Integer id;
+  private Integer uid;
+  private Integer gid;
 
 
-  public long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
-
-  public long getUid() {
+  public Integer getUid() {
     return uid;
   }
 
-  public void setUid(long uid) {
+  public void setUid(Integer uid) {
     this.uid = uid;
   }
 
-
-  public long getGid() {
+  public Integer getGid() {
     return gid;
   }
 
-  public void setGid(long gid) {
+  public void setGid(Integer gid) {
     this.gid = gid;
   }
-
 }
