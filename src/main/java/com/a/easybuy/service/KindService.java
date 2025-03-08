@@ -15,4 +15,5 @@ public interface KindService {
     List<Kind> getCategoryTree();
     ResponseMessage getAllFirst();
     ResponseMessage getNext(Integer pid);
+    ResponseMessage getPrevious(Integer id);
 }

@@ -45,8 +45,16 @@ public class KindController {
     }
     @RequestMapping("delKind")
     @ResponseBody
+    @CrossOrigin
     public ResponseMessage delKind(String id){
         logger.info("KindController getKindList start...id:"+id);
         return kindService.delKind(Integer.parseInt(id));
+    }
+    @RequestMapping("getRelative")
+    @ResponseBody
+//    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage getRelative(Integer id){
+        logger.info("KindController getKindList start...id:"+id);
+        return kindService.getPrevious(id);
     }
 }
