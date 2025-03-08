@@ -1,0 +1,14 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kgc.easybuy.dao.LikeMapper">
+    <insert id="addGoodToLike">
+        insert into `like`(uid,gid) values(#{uid},#{gid})
+    </insert>
+    <select id="getLikeList" resultType="Like">
+        select * from `like` where uid=#{uid}
+    </select>
+    <delete id="delGoodInLike">
+        DELETE FROM `like` where uid=#{uid} and gid=#{gid}
+    </delete>
+</mapper>

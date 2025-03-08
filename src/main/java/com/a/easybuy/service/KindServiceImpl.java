@@ -155,4 +155,29 @@ private KindMapper kindMapper;
         rm.setData(kindList);
         return rm;
     }
+
+    @Override
+    public ResponseMessage getPrevious(Integer id) {
+        logger.info("KindServiceImpl  getPrevious start.. id:"+id);
+        ResponseMessage rm = new ResponseMessage();
+        ArrayList<Kind> list = new ArrayList<>();
+        boolean isOK=true;
+        while (isOK){
+            Kind kind = kindMapper.getKindById(id);
+            list.add(kind);
+            if (kind.getPid()==0){
+                isOK=false;
+            }
+            id=(int)kind.getPid();
+        }
+        logger.debug("getKindById list:"+list);
+        if (list.isEmpty()){
+            rm.setCode("201");
+            rm.setMsg("分类加载错误");
+        }else {
+            rm.setCode("200");
+            rm.setData(list);
+        }
+        return rm;
+    }
 }

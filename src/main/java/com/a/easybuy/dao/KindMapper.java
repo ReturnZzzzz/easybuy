@@ -10,5 +10,6 @@ public interface KindMapper {
     int addKind(Kind kind);
     int delKind(int id);
     List<Kind> getKindListByPid(Integer id);
+    public Kind getKindById(Integer id);
     List<Good> getGoodListBykid(Integer id);
 }
