@@ -1,8 +1,11 @@
 package com.a.easybuy.controller;
 
+import com.a.easybuy.dao.OrderMapper;
+import com.a.easybuy.pojo.CarDetail;
 import com.a.easybuy.pojo.Order;
 import com.a.easybuy.pojo.ResponseMessage;
 import com.a.easybuy.service.OrderService;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 @Controller
 @RequestMapping("order")
 public class OrderController {
@@ -18,6 +26,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @RequestMapping("getPage")
     @ResponseBody
@@ -31,10 +41,11 @@ public class OrderController {
     @RequestMapping("create")
     @ResponseBody
     @CrossOrigin
-    public ResponseMessage create(Order order){
-        logger.info("orderController create start order:"+order);
-        ResponseMessage responseMessage = orderService.create(order);
-        logger.debug("orderService create order:"+order);
+    public ResponseMessage create(String carDetails,String loginName){
+        logger.info("orderController create start carDetails:"+carDetails);
+        List<CarDetail> carDetailList = JSON.parseArray(carDetails, CarDetail.class);
+        ResponseMessage responseMessage = orderService.create(carDetailList,loginName);
+        logger.debug("orderService create carDetailList:"+carDetailList+"loginName:"+loginName+",responseMessage:"+responseMessage);
         return responseMessage;
     }
     @RequestMapping("close")

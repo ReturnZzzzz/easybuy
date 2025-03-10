@@ -35,6 +35,10 @@
             update user set name=#{name},userName=#{userName},password=#{password},email=#{email},phone=#{phone},role=#{role}
                         where id=#{id} and status=1
     </update>
+    <update id="forgetUser" parameterType="User">
+        update user set name=#{name},userName=#{userName},password=#{password},email=#{email},phone=#{phone},role=#{role}
+        where id=#{id} and status=1
+    </update>
     <update id="delUser">
         update user set status=0 where id=#{id}
     </update>

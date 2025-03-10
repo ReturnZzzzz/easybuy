@@ -1,7 +1,9 @@
 package com.a.easybuy.pojo;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
 
@@ -10,9 +12,18 @@ public class Order {
   private String loginName;
   private String adress;
   private Date createDate;
-  private double total;
+  private BigDecimal total;
   private String orderCode;
   private int status;
+  private List<OrderDetail> list;
+
+  public List<OrderDetail> getList() {
+    return list;
+  }
+
+  public void setList(List<OrderDetail> list) {
+    this.list = list;
+  }
 
   public long getId() {
     return id;
@@ -58,14 +69,13 @@ public class Order {
     this.createDate = createDate;
   }
 
-  public double getTotal() {
+  public BigDecimal getTotal() {
     return total;
   }
 
-  public void setTotal(double total) {
+  public void setTotal(BigDecimal total) {
     this.total = total;
   }
-
 
   public String getOrderCode() {
     return orderCode;

@@ -13,4 +13,5 @@ public interface UserService {
     public ResponseMessage deleteUser(int id);
     public ResponseMessage getUser(int id);
     public ResponseMessage getUserByEmail(String email);
+    public ResponseMessage checkRandom(String random,String email);
 }

@@ -1,9 +1,11 @@
 package com.a.easybuy.controller;
 
 import com.a.easybuy.service.EmailService;
+import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.mail.MessagingException;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("mail")
@@ -18,13 +21,18 @@ public class EmailController {
     private Logger logger = LoggerFactory.getLogger(EmailController.class);
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     // 发送简单邮件
     @RequestMapping("/simple")
-    public String sendSimpleEmail() {
+    public String sendSimpleEmail(String email) {
+        logger.info("sendSimpleEmail email:" + email);
+        String random = RandomStringUtils.randomAlphanumeric(5);
+        redisTemplate.opsForValue().set(email, random,3, TimeUnit.MINUTES);
         emailService.sendSimpleMail(
-                "1290666022@qq.com",
-                "测试简单邮件",
+                email,
+                "邮箱验证码",
                 "111"
         );
         return "简单邮件已发送";
