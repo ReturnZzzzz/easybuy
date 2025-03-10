@@ -12,4 +12,7 @@ public interface KindMapper {
     List<Kind> getKindListByPid(Integer id);
     public Kind getKindById(Integer id);
     List<Good> getGoodListBykid(Integer id);
+    Kind getKindByName(String name);
+    Kind getKindByPid(Integer pid);
+    List<Kind> getChildKind(Integer id);
 }

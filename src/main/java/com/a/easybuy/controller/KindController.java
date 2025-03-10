@@ -57,4 +57,39 @@ public class KindController {
         logger.info("KindController getKindList start...id:"+id);
         return kindService.getPrevious(id);
     }
+
+    @RequestMapping("getKindListOfName")
+    @ResponseBody
+    public ResponseMessage getKindListOfName(){
+        logger.info("KindController getKindListOfName start...");
+        return kindService.getKindListOfName();
+    }
+
+    @RequestMapping("checkKindName")
+    @ResponseBody
+    public ResponseMessage checkName(String name){
+        logger.info("KindController checkName start...name:"+name);
+        return kindService.checkKindName(name);
+    }
+
+    @RequestMapping("addKind")
+    @ResponseBody
+    public ResponseMessage addKind(String name,String pid){
+        logger.info("KindController addKind start...name:"+name+"pid"+pid);
+        return  kindService.addKind(name,Integer.parseInt(pid));
+    }
+
+    @RequestMapping("getChildKind")
+    @ResponseBody
+    public ResponseMessage addKind(String id){
+        logger.info("KindController addKind start...id"+id);
+        return  kindService.getChildKind(Integer.parseInt(id));
+    }
+
+    @RequestMapping("getTwoAndThreeKind")
+    @ResponseBody
+    public ResponseMessage getTwoAndTrheeKind(String id){
+        logger.info("KindController addKind start...id"+id);
+        return  kindService.getTwoThirdChild(Integer.parseInt(id));
+    }
 }

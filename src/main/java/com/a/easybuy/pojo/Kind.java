@@ -10,8 +10,17 @@ public class Kind {
   private long pid;
   private long type;
   private String iconClass;
+  private int level;
   private List<Kind> children;
   private List<Good> products;
+
+  public int getLevel() {
+    return level;
+  }
+
+  public void setLevel(int level) {
+    this.level = level;
+  }
 
   public List<Kind> getChildren() {
     return children;

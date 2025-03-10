@@ -54,8 +54,23 @@ private KindMapper kindMapper;
     }
 
     @Override
-    public ResponseMessage addKind(Kind kind) {
-        return null;
+    public ResponseMessage addKind(String name, Integer pid) {
+        logger.info("KindServiceImpl addKind name:"+name+"pid"+pid);
+        ResponseMessage rm = new ResponseMessage();
+        Kind kind = new Kind();
+        kind.setName(name);
+        kind.setPid(pid);
+        Kind newKind=kindMapper.getKindByPid(pid);
+        kind.setLevel(newKind.getLevel());
+        int i =kindMapper.addKind(kind);
+        if(i>0){
+            rm.setCode("200");
+            rm.setMsg("添加成功!");
+        }else{
+            rm.setCode("201");
+            rm.setMsg("添加失败!");
+        }
+        return rm;
     }
 
     @Override
@@ -178,6 +193,51 @@ private KindMapper kindMapper;
             rm.setCode("200");
             rm.setData(list);
         }
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage getKindListOfName() {
+        logger.info("KindServiceImpl  getKindListOfName start...");
+        ResponseMessage rm = new ResponseMessage();
+        List<Kind> kindList = kindMapper.getKindList();
+        rm.setData(kindList);
+        logger.debug("getKindListOfName value kindList:"+kindList);
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage checkKindName(String name) {
+        logger.info("KindServiceImpl  checkKindName start... name:"+name);
+        ResponseMessage rm = new ResponseMessage();
+        Kind kind = kindMapper.getKindByName(name);
+        if(kind == null){
+            rm.setCode("200");
+        }else {
+            rm.setCode("201");
+        }
+        logger.debug("checkKindName value rm:"+rm);
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage getChildKind(Integer id) {
+        logger.info("KindServiceImpl  checkKindName start... id:"+id);
+        ResponseMessage rm = new ResponseMessage();
+        List<Kind> kindList = kindMapper.getChildKind(id);
+        rm.setData(kindList);
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage getTwoThirdChild(Integer id) {
+        logger.info("KindServiceImpl  getTwoThirdChild start... id:"+id);
+        ResponseMessage rm = new ResponseMessage();
+        List<Kind> twoList = kindMapper.getChildKind(id);
+        for(Kind kind:twoList){
+            kind.setChildren(kindMapper.getChildKind(kind.getId()));
+        }
+        rm.setData(twoList);
         return rm;
     }
 }

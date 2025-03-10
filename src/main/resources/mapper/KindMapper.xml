@@ -3,10 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.a.easybuy.dao.KindMapper">
     <select id="getKindList" resultType="Kind">
-        select * from kind where status = 1
+        select k1.*,k2.name as pname
+        from kind k1,kind k2
+        where k1.pid=k2.id and k1.statu = 1
+        ORDER BY level
     </select>
     <insert id="addKind">
-        insert into kind(pid,name) values(#{pid},#{name})
+        insert into kind(pid,name,level) values(#{pid},#{name},#{level})
     </insert>
     <update id="delKind">
         update kind set status = 0 where id=#{id}
@@ -20,4 +23,17 @@
     <select id="getGoodListBykid" resultType="Good">
         select * from goods where kid=#{id} limit 8
     </select>
+    <select id="getKindByName" resultType="Kind">
+        select * from kind where name=#{name}
+    </select>
+    <select id="getKindByPid" resultType="Kind">
+        select * from kind where id=#{pid}
+    </select>
+    <select id="getChildKind" resultType="Kind">
+        SELECT * FROM kind
+        WHERE pid=#{id}
+    </select>
+    <update id="changeKind">
+        update kind set name=#{name},pid=#{pid},level=#{level} where id=#{id}
+    </update>
 </mapper>
