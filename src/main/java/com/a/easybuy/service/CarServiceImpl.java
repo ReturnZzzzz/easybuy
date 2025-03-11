@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -100,6 +102,23 @@ public class CarServiceImpl implements CarService {
         ResponseMessage rm = new ResponseMessage();
         int count=carMapper.del(id);
         logger.debug("CarServiceImpl del count :"+count+"count"+count);
+        if(count>0){
+            rm.setCode("200");
+        }else {
+            rm.setCode("201");
+        }
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage addCarDetail(CarDetail carDetail) {
+        logger.info("CarServiceImpl addCarDetail start... carDetail:"+carDetail);
+        ResponseMessage rm = new ResponseMessage();
+        Map<String,Object> map=new HashMap<>();
+        map.put("cid",carDetail.getCid());
+        map.put("gid",carDetail.getGood().getId());
+        map.put("count",carDetail.getCount());
+        int count = carMapper.addCarDetail(map);
         if(count>0){
             rm.setCode("200");
         }else {

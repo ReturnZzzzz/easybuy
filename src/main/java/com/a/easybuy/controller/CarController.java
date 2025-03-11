@@ -63,4 +63,12 @@ public class CarController {
         ResponseMessage responseMessage = carService.del(id);
         return responseMessage;
     }
+    @RequestMapping("addCarDetail")
+    @ResponseBody
+    public ResponseMessage addCarDetail(CarDetail carDetail){
+        logger.info("CarController getGoodsInCar start... carDetail:"+carDetail);
+        ResponseMessage responseMessage = carService.addCarDetail(carDetail);
+        logger.debug("CarController getGoodsInCar...responseMessage"+responseMessage);
+        return responseMessage;
+    }
 }

@@ -13,4 +13,5 @@ public interface CarService {
     ResponseMessage getOrderDetail(int uid);
     ResponseMessage change(CarDetail carDetail);
     ResponseMessage del(int id);
+    ResponseMessage addCarDetail(CarDetail carDetail);
 }
