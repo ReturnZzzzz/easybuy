@@ -61,7 +61,8 @@ public class OrderServiceImpl implements  OrderService{
     @Override
     public ResponseMessage create(List<CarDetail> carDetails,String loginName) {
         logger.info("create carDetails:{}", carDetails);
-        String orderCode = UUID.randomUUID().toString();
+        String code = UUID.randomUUID().toString();
+        String orderCode = code.replaceAll("-","");
         Order orderTemp = new Order();
         orderTemp.setOrderCode(orderCode);
         orderMapper.create(orderTemp);

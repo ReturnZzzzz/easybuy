@@ -9,4 +9,5 @@ import java.util.Map;
 public interface AlipayService {
     public ResponseMessage alipayNotify(Map<String, String> map) throws AlipayApiException;
     ResponseMessage createOrder(String phoneNumber,String price);
+    ResponseMessage pay(String phoneNumber,String price);
 }
