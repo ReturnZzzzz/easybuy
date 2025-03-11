@@ -58,6 +58,9 @@
         WHERE
             c.uid = #{uid}
     </select>
+    <insert id="addCarDetail" parameterType="map">
+    insert into car_detail(cid, gid, count) values(#{cid},#{gid},#{count})
+    </insert>
     <update id="change" parameterType="CarDetail">
         update car_detail set count=#{count} where id=#{id}
     </update>

@@ -140,6 +140,14 @@ public class OrderServiceImpl implements  OrderService{
         ResponseMessage responseMessage = new ResponseMessage();
         Map<String,Object> map = new HashMap<>();
         map.put("id",id);
+        Order order = orderMapper.getOne(map);
+        for (OrderDetail orderDetail:order.getList()){
+            Map<String,Object> params = new HashMap<>();
+            params.put("gid",orderDetail.getGid());
+            params.put("count",orderDetail.getCount());
+            int count = orderMapper.rollback(params);
+            logger.debug("orderMapper.rollback count:{}", count);
+        }
         map.put("status",0);
         int count = orderMapper.update(map);
         if (count > 0) {
