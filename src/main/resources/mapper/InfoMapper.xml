@@ -1,19 +1,20 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.a.easybuy.dao.InfoMapper">
+<mapper namespace="com.kgc.easybuy.dao.InfoMapper">
     <select id="getInfoList" resultType="Info">
-        select * from info
-        where istatus=1
-        limit #{pageNow},#{pageSize}
+        select * from info where statu = 1 order by createDate desc
     </select>
     <insert id="addInfo">
-        insert into info(title,content,createDate,istatus) values(#{title},#{content},#{createDate},1)
+        insert into info(title,content,createDate) values(#{title},#{content},#{createDate})
     </insert>
     <update id="delInfo">
-        update info set istatus=0  where id=#{id}
+        update info set statu=0 where id=#{id}
     </update>
-    <select id="findInfo">
-        select * from info where id=#{id} and istatus=1
+    <select id="findInfo" resultType="Info">
+        select * from info where id=#{id} and statu=1
     </select>
+    <update id="changeInfo">
+        update info set title=#{title},content=#{content} where id=#{id}
+    </update>
 </mapper>
