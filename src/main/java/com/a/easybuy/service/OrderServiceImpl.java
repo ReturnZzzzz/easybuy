@@ -8,11 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 @Service
+//@Transactional
 public class OrderServiceImpl implements  OrderService{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -26,6 +28,31 @@ public class OrderServiceImpl implements  OrderService{
         ResponseMessage responseMessage = new ResponseMessage();
         PageHelper.startPage(pageNow, pageSize);
         List<Order> list = orderMapper.getAll();
+        logger.debug("orderMapper.getByPage list:{}", list);
+        PageHelper.clearPage();
+        PageInfo<Order> pageInfo = new PageInfo<>();
+        pageInfo.setList(list);
+        pageInfo.setPageNow(pageNow);
+        pageInfo.setPageSize(pageSize);
+        pageInfo.setTotal(orderMapper.getCount());
+
+        if (list != null && list.size() > 0) {
+            responseMessage.setCode("200");
+            responseMessage.setData(pageInfo);
+        }else {
+            responseMessage.setCode("201");
+        }
+        return responseMessage;
+    }
+
+    @Override
+    public ResponseMessage getByPage(Integer uid, Integer pageNow, Integer pageSize) {
+        logger.info("getByPage pageNow:{},pageSize:{}", pageNow, pageSize);
+        ResponseMessage responseMessage = new ResponseMessage();
+        Map<String,Object> map = new HashMap<>();
+        map.put("uid",uid);
+        PageHelper.startPage(pageNow, pageSize);
+        List<Order> list = orderMapper.getUserAll(map);
         logger.debug("orderMapper.getByPage list:{}", list);
         PageHelper.clearPage();
         PageInfo<Order> pageInfo = new PageInfo<>();
@@ -141,9 +168,10 @@ public class OrderServiceImpl implements  OrderService{
         Map<String,Object> map = new HashMap<>();
         map.put("id",id);
         Order order = orderMapper.getOne(map);
-        for (OrderDetail orderDetail:order.getList()){
+        List<OrderDetail> orderDetails = orderMapper.getOrderDetail((int) order.getId());
+        for (OrderDetail orderDetail:orderDetails){
             Map<String,Object> params = new HashMap<>();
-            params.put("gid",orderDetail.getGid());
+            params.put("gid",orderDetail.getGood().getId());
             params.put("count",orderDetail.getCount());
             int count = orderMapper.rollback(params);
             logger.debug("orderMapper.rollback count:{}", count);

@@ -8,6 +8,7 @@ import java.util.Map;
 
 public interface OrderMapper {
     public List<Order> getAll();
+    public List<Order> getUserAll(Map<String,Object> map);
     public int getCount();
     public Order getOne(Map<String, Object> map);
     public int create(Order order);

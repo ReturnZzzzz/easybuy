@@ -25,10 +25,10 @@ public class UserController {
     @RequestMapping("login")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
-    public ResponseMessage login(String username, String password) {
-        logger.info("login start username:" + username + " password:" + password);
-        ResponseMessage responseMessage = userService.login(username, password);
-        logger.debug("userService login username:" + username + " password:" + password);
+    public ResponseMessage login(String name, String password) {
+        logger.info("login start name:" + name + " password:" + password);
+        ResponseMessage responseMessage = userService.login(name, password);
+        logger.debug("userService login name:" + name + " password:" + password);
         return responseMessage;
     }
 

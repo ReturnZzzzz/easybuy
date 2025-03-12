@@ -32,7 +32,7 @@ public class RandomController {
         String str = randomCodeUtil.getString(4);//生成4位数的随机验证码
         randomCodeUtil.getImg(response,str);//生成图片
         String redisKey ="redisKey"+str;//生成唯一的redis的Key值
-        redisTemplate.opsForValue().set(redisKey,str,60, TimeUnit.SECONDS);//将验证码数据添加到redis中,失效时间是1分钟
+        redisTemplate.opsForValue().set(redisKey,str,120, TimeUnit.SECONDS);//将验证码数据添加到redis中,失效时间是1分钟
         logger.debug("UtilController generateCaptchaImageAndStoreKey returnValue:"+redisKey);
     }
 }

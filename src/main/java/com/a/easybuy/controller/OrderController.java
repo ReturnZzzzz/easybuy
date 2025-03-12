@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("order")
@@ -26,8 +23,6 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-    @Autowired
-    private OrderMapper orderMapper;
 
     @RequestMapping("getPage")
     @ResponseBody
@@ -35,6 +30,15 @@ public class OrderController {
     public ResponseMessage getPage(Integer pageNow, Integer pageSize){
         logger.info("orderController getPage start pageNow:"+pageNow+",pageSize:"+pageSize);
         ResponseMessage responseMessage = orderService.getByPage(pageNow,pageSize);
+        logger.debug("orderController getPage end pageNow:"+pageNow+",pageSize:"+pageSize+",responseMessage:"+responseMessage);
+        return responseMessage;
+    }
+    @RequestMapping("getUserPage")
+    @ResponseBody
+    @CrossOrigin
+    public ResponseMessage getUserPage(Integer uid,Integer pageNow, Integer pageSize){
+        logger.info("orderController getPage start pageNow:"+pageNow+",pageSize:"+pageSize);
+        ResponseMessage responseMessage = orderService.getByPage(uid,pageNow,pageSize);
         logger.debug("orderController getPage end pageNow:"+pageNow+",pageSize:"+pageSize+",responseMessage:"+responseMessage);
         return responseMessage;
     }

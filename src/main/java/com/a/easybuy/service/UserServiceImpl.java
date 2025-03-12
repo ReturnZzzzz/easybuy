@@ -6,6 +6,7 @@ import com.a.easybuy.pojo.ResponseMessage;
 import com.a.easybuy.pojo.User;
 import com.a.easybuy.pojo.UserQuery;
 import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,16 +27,15 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserMapper userMapper;
-    @Qualifier("redisTemplate")
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,String> redisTemplate;
 
     @Override
     public ResponseMessage login(String userName, String password) {
         logger.info("login userName:{} password:{}", userName, password);
         ResponseMessage responseMessage = new ResponseMessage();
         Map<String,Object> param = new HashMap<>();
-        param.put("username",userName);
+        param.put("name",userName);
         User user = userMapper.getById(param);
         if(user == null){
             responseMessage.setCode("201");
@@ -43,8 +43,12 @@ public class UserServiceImpl implements UserService{
         }else {
             if (user.getPassword().equals(password)) {
                 responseMessage.setCode("200");
-                responseMessage.setData(user);
-                redisTemplate.opsForValue().set(userName,user.getId(),30, TimeUnit.MINUTES);
+                User userTemp = new User();
+                userTemp.setUserName(userName);
+                userTemp.setId(user.getId());
+                userTemp.setRole(user.getRole());
+                responseMessage.setData(userTemp);
+                redisTemplate.opsForValue().set(userName, JSON.toJSONString(user),30, TimeUnit.MINUTES);
             }else {
                 responseMessage.setCode("201");
                 responseMessage.setMsg("密码错误");
@@ -61,6 +65,8 @@ public class UserServiceImpl implements UserService{
             responseMessage.setCode("202");
             return responseMessage;
         }
+        user.setUserName("test");
+        user.setSex(1);
         int count = userMapper.addUser(user);
         if(count>0){
             responseMessage.setCode("200");

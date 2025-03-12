@@ -35,6 +35,8 @@ public class AlipayController {
     private BillService billService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderMapper orderMapper;
 
     @RequestMapping("/createOrder")
     @ResponseBody
@@ -79,12 +81,16 @@ public class AlipayController {
     @RequestMapping("/pay")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
-    public void pay(HttpServletResponse response,String total,String orderCode) {
+    public void pay(HttpServletResponse response,String orderCode) {
         logger.info("AlipayController pay start...");
+        Map<String,Object> map = new HashMap<>();
+        map.put("orderCode",orderCode);
+        Order order = orderMapper.getOne(map);
+        BigDecimal total = order.getTotal();
         try {
             response.setContentType("text/html;charset=utf-8");
             PrintWriter pw = response.getWriter();
-            ResponseMessage msg = alipayService.pay(total,orderCode);
+            ResponseMessage msg = alipayService.pay(total.toString(),orderCode);
             logger.debug("AlipayController createOrder result:" + msg);
             if ("200".equals(msg.getCode())) {
                 pw.write((String) (msg.getData()));
