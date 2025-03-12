@@ -5,6 +5,9 @@
     <select id="getAll" resultType="Order">
         select * from `order`
     </select>
+    <select id="getUserAll" resultType="Order" parameterType="map">
+        select * from `order` where uid=#{uid}
+    </select>
     <select id="getCount" resultType="int">
         select count(1) from `order`
     </select>
@@ -21,6 +24,8 @@
     </select>
     <resultMap id="OrderDetailResultMap" type="OrderDetail">
         <id property="id" column="id"/>
+        <result property="gid" column="gid"/>
+        <result property="oid" column="oid"/>
         <result property="count" column="count"/>
         <association property="good" javaType="Good">
             <id property="id" column="good_id"/>

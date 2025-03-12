@@ -5,7 +5,7 @@
     <select id="getKindList" resultType="Kind">
         select k1.*,k2.name as pname
         from kind k1,kind k2
-        where k1.pid=k2.id and k1.statu = 1
+        where k1.pid=k2.id and k1.status = 1
         ORDER BY level
     </select>
     <insert id="addKind">
