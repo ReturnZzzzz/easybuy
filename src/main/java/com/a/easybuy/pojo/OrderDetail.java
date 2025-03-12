@@ -1,57 +1,60 @@
 package com.a.easybuy.pojo;
 
+import java.math.BigDecimal;
 
 public class OrderDetail {
+    private int id;
+    private long oid;
+    private long gid;
+    private Good good;
+    private int count;
+    private BigDecimal total;
 
-  private long id;
-  private long oid;
-  private long gid;
-  private long count;
-  private double total;
+    public long getGid() {
+        return gid;
+    }
 
+    public void setGid(long gid) {
+        this.gid = gid;
+    }
 
-  public long getId() {
-    return id;
-  }
+    public long getOid() {
+        return oid;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public void setOid(long oid) {
+        this.oid = oid;
+    }
 
+    public BigDecimal getTotal() {
+        return total;
+    }
 
-  public long getOid() {
-    return oid;
-  }
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
 
-  public void setOid(long oid) {
-    this.oid = oid;
-  }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public long getGid() {
-    return gid;
-  }
+    public Good getGood() {
+        return good;
+    }
 
-  public void setGid(long gid) {
-    this.gid = gid;
-  }
+    public void setGood(Good good) {
+        this.good = good;
+    }
 
+    public int getCount() {
+        return count;
+    }
 
-  public long getCount() {
-    return count;
-  }
-
-  public void setCount(long count) {
-    this.count = count;
-  }
-
-
-  public double getTotal() {
-    return total;
-  }
-
-  public void setTotal(double total) {
-    this.total = total;
-  }
-
+    public void setCount(int count) {
+        this.count = count;
+    }
 }

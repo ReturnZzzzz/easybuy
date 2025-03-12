@@ -8,13 +8,71 @@
     <select id="getCount" resultType="int">
         select count(1) from `order`
     </select>
-    <select id="getOne" resultType="Order">
-        select * from `order` where id = #{id}
+    <select id="getOne" resultType="Order" parameterType="map">
+        select * from `order`
+        <where>
+            <if test="id!=null and id!=''">
+                and id = #{id}
+            </if>
+            <if test="orderCode!=null and orderCode!=''">
+                and orderCode=#{orderCode}
+            </if>
+        </where>
+    </select>
+    <resultMap id="OrderDetailResultMap" type="OrderDetail">
+        <id property="id" column="id"/>
+        <result property="count" column="count"/>
+        <association property="good" javaType="Good">
+            <id property="id" column="good_id"/>
+            <result property="gname" column="gname"/>
+            <result property="description" column="description"/>
+            <result property="price" column="price"/>
+            <result property="stock" column="stock"/>
+            <result property="imgPath" column="imgPath"/>
+            <result property="gstatus" column="gstatus"/>
+            <result property="kid" column="kid"/>
+            <result property="createdate" column="createdate"/>
+        </association>
+    </resultMap>
+    <select id="getOrderDetail" resultMap="OrderDetailResultMap">
+        SELECT
+            od.id,
+            od.count,
+            g.id AS good_id,
+            g.gname,
+            g.description,
+            g.price,
+            g.stock,
+            g.imgPath,
+            g.gstatus,
+            g.kid,
+            g.createdate
+        FROM order_detail od
+                 INNER JOIN goods g ON od.gid = g.id
+        WHERE od.oid = #{id}
     </select>
     <insert id="create" parameterType="Order">
         insert into `order`(uid,loginName, adress, createDate, total, orderCode, status)
         values (#{uid},#{loginName},#{adress},#{createDate},#{total},#{orderCode},1)
     </insert>
+    <insert id="addDetail" parameterType="OrderDetail">
+        insert into order_detail(oid, gid, count, total)
+        values (#{oid}, #{gid}, #{count}, #{total})
+    </insert>
+    <update id="reload" parameterType="Order">
+        update `order`
+        set uid=#{uid},loginName=#{loginName},
+            adress=#{adress}, createDate=#{createDate},
+            total=#{total}, orderCode=#{orderCode},
+            status=#{status}
+        where id=#{id}
+    </update>
+    <update id="decrease" parameterType="map">
+        update goods set stock=stock-#{count} where id=#{gid}
+    </update>
+    <update id="rollback" parameterType="map">
+        update goods set stock=stock+#{count} where id=#{gid}
+    </update>
     <update id="update" parameterType="map">
         update `order` set status = #{status} where id=#{id} and status=1
     </update>

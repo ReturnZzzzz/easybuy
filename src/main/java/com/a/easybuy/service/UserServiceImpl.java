@@ -5,6 +5,7 @@ import com.a.easybuy.pojo.PageInfo;
 import com.a.easybuy.pojo.ResponseMessage;
 import com.a.easybuy.pojo.User;
 import com.a.easybuy.pojo.UserQuery;
+import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -162,6 +163,26 @@ public class UserServiceImpl implements UserService{
         }else {
             responseMessage.setCode("201");
         }
+        return responseMessage;
+    }
+
+    @Override
+    public ResponseMessage checkRandom(String random,String email) {
+        String code = (String) redisTemplate.opsForValue().get(email);
+        ResponseMessage responseMessage = new ResponseMessage();
+        if (StringUtils.isEmpty(code)){
+            responseMessage.setCode("201");
+            return responseMessage;
+        }
+        if (code.equals(random)){
+            responseMessage.setCode("200");
+            HashMap map = new HashMap();
+            map.put("email", email);
+            User user =userMapper.getById(map);
+            responseMessage.setData(user);
+            return responseMessage;
+        }
+        responseMessage.setCode("201");
         return responseMessage;
     }
 }

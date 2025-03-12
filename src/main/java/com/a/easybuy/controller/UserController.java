@@ -32,6 +32,26 @@ public class UserController {
         return responseMessage;
     }
 
+    @RequestMapping("toForget")
+    @ResponseBody
+    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage toForget(String random,String email) {
+        logger.info("login start username: random:" + random);
+        ResponseMessage responseMessage = userService.checkRandom(random,email);
+        logger.debug("userService checkRandom random:" + random + " email:" + email);
+        return responseMessage;
+    }
+
+    @RequestMapping("forget")
+    @ResponseBody
+    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage forget(User user) {
+        logger.info("update user:" + user);
+        ResponseMessage responseMessage = userService.updateUser(user);
+        logger.debug("userService update user:" + user);
+        return responseMessage;
+    }
+
     @RequestMapping("register")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
@@ -41,6 +61,7 @@ public class UserController {
         logger.debug("userService register user:" + user);
         return responseMessage;
     }
+
     @RequestMapping("checkName")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")

@@ -2,18 +2,15 @@ package com.a.easybuy.service;
 
 import com.a.easybuy.dao.OrderMapper;
 import com.a.easybuy.dao.UserMapper;
-import com.a.easybuy.pojo.Order;
-import com.a.easybuy.pojo.PageInfo;
-import com.a.easybuy.pojo.ResponseMessage;
+import com.a.easybuy.pojo.*;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements  OrderService{
@@ -47,10 +44,10 @@ public class OrderServiceImpl implements  OrderService{
     }
 
     @Override
-    public ResponseMessage getById(Integer id) {
-        logger.info("getById id:{}", id);
+    public ResponseMessage getOne(Map<String,Object> map) {
+        logger.info("getById map:{}", map);
         ResponseMessage responseMessage = new ResponseMessage();
-        Order order = orderMapper.getOne(id);
+        Order order = orderMapper.getOne(map);
         logger.debug("orderMapper.getById order:{}", order);
         if (order != null) {
             responseMessage.setCode("200");
@@ -62,12 +59,43 @@ public class OrderServiceImpl implements  OrderService{
     }
 
     @Override
-    public ResponseMessage create(Order order) {
-        logger.info("create order:{}", order);
+    public ResponseMessage create(List<CarDetail> carDetails,String loginName) {
+        logger.info("create carDetails:{}", carDetails);
+        String code = UUID.randomUUID().toString();
+        String orderCode = code.replaceAll("-","");
+        Order orderTemp = new Order();
+        orderTemp.setOrderCode(orderCode);
+        orderMapper.create(orderTemp);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("orderCode",orderCode);
+        Order order =orderMapper.getOne(map);
+        order.setLoginName(loginName);
+        List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
+        BigDecimal total=new BigDecimal(0);
+        for (CarDetail carDetail:carDetails){
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setGood(carDetail.getGood());
+            orderDetail.setGid(orderDetail.getGood().getId());
+            orderDetail.setCount(carDetail.getCount());
+            Map<String,Object> params = new HashMap<>();
+            params.put("gid",orderDetail.getGid());
+            params.put("count",orderDetail.getCount());
+            orderMapper.decrease(params);
+            orderDetail.setOid(order.getId());
+            orderDetail.setTotal(orderDetail.getGood().getPrice().multiply(new BigDecimal( orderDetail.getCount())));
+            orderDetails.add(orderDetail);
+            total=total.add(orderDetail.getTotal());
+            orderMapper.addDetail(orderDetail);
+        }
+        order.setList(orderDetails);
+        order.setTotal(total);
+        order.setAdress("111");
+        order.setCreateDate(new Date());
         ResponseMessage responseMessage = new ResponseMessage();
-        int count = orderMapper.create(order);
+        int count = orderMapper.reload(order);
         if (count > 0) {
             responseMessage.setCode("200");
+            responseMessage.setData(order);
         }else {
             responseMessage.setCode("201");
         }
@@ -112,6 +140,14 @@ public class OrderServiceImpl implements  OrderService{
         ResponseMessage responseMessage = new ResponseMessage();
         Map<String,Object> map = new HashMap<>();
         map.put("id",id);
+        Order order = orderMapper.getOne(map);
+        for (OrderDetail orderDetail:order.getList()){
+            Map<String,Object> params = new HashMap<>();
+            params.put("gid",orderDetail.getGid());
+            params.put("count",orderDetail.getCount());
+            int count = orderMapper.rollback(params);
+            logger.debug("orderMapper.rollback count:{}", count);
+        }
         map.put("status",0);
         int count = orderMapper.update(map);
         if (count > 0) {

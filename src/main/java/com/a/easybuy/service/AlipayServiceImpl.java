@@ -67,6 +67,43 @@ public class AlipayServiceImpl implements AlipayService{
     }
 
     @Override
+    public ResponseMessage pay(String total, String orderCode) {
+        ResponseMessage responseMessage = new ResponseMessage();
+        try {
+            // 初始化SDK
+            AlipayClient alipayClient = new DefaultAlipayClient(alipayUtil.getAlipayConfig());
+            // 构造请求参数以调用接口
+            AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+            AlipayTradePagePayModel model = new AlipayTradePagePayModel();
+            // 设置商户订单号
+            model.setOutTradeNo(orderCode);
+            // 设置订单总金额
+            model.setTotalAmount(total);
+            // 设置订单标题
+            model.setSubject("易买网消费"+total+"元");
+            // 设置产品码（固定）
+            model.setProductCode("FAST_INSTANT_TRADE_PAY");
+            request.setReturnUrl(alipay.getReturnUrl());
+            request.setNotifyUrl(alipay.getNotifyUrl());
+            request.setBizModel(model);
+            AlipayTradePagePayResponse response = alipayClient.pageExecute(request, "POST");
+            String pageRedirectionData = response.getBody();//获取支付宝响应的html支付页面
+            System.out.println(pageRedirectionData);
+            if (response.isSuccess()) {
+                System.out.println("调用成功");
+                responseMessage.setCode("200");
+                responseMessage.setData(pageRedirectionData);
+            } else {
+                System.out.println("调用失败");
+                responseMessage.setCode("201");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return responseMessage;
+    }
+
+    @Override
     public   ResponseMessage alipayNotify(Map<String, String> map) throws AlipayApiException {
         logger.info("AlipayServiceImpl method alipayNotify params " + map);
         ResponseMessage responseMessage = new ResponseMessage();

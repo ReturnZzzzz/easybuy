@@ -1,47 +1,49 @@
 package com.a.easybuy.pojo;
 
-
 public class CarDetail {
+    private int id;
+    private Good good;
+    private int count;
+    private int cid;
 
-  private long id;
-  private long cid;
-  private long gid;
-  private long count;
+    public int getCid() {
+        return cid;
+    }
 
+    public void setCid(int cid) {
+        this.cid = cid;
+    }
 
-  public long getId() {
-    return id;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public int getCount() {
+        return count;
+    }
 
-  public long getCid() {
-    return cid;
-  }
+    public void setCount(int count) {
+        this.count = count;
+    }
 
-  public void setCid(long cid) {
-    this.cid = cid;
-  }
+    public Good getGood() {
+        return good;
+    }
 
+    public void setGood(Good good) {
+        this.good = good;
+    }
 
-  public long getGid() {
-    return gid;
-  }
-
-  public void setGid(long gid) {
-    this.gid = gid;
-  }
-
-
-  public long getCount() {
-    return count;
-  }
-
-  public void setCount(long count) {
-    this.count = count;
-  }
-
+    @Override
+    public String toString() {
+        return "CarDetail{" +
+                "id=" + id +
+                ", good=" + good +
+                ", count=" + count +
+                '}';
+    }
 }

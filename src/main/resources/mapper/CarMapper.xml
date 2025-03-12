@@ -1,0 +1,72 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.a.easybuy.dao.CarMapper">
+
+    <resultMap id="CarResultMap" type="Car">
+        <id property="id" column="car_id"/>
+        <collection property="list" ofType="CarDetail" resultMap="CarDetailResultMap"/>
+    </resultMap>
+
+    <resultMap id="CarDetailResultMap" type="CarDetail">
+        <id property="id" column="detail_id"/>
+        <result property="count" column="count"/>
+        <association property="good" javaType="Good">
+            <id property="id" column="good_id"/>
+            <result property="gname" column="gname"/>
+            <result property="description" column="description"/>
+            <result property="price" column="price"/>
+            <result property="stock" column="stock"/>
+            <result property="imgPath" column="imgPath"/>
+            <result property="gstatus" column="gstatus"/>
+            <result property="kid" column="kid"/>
+            <result property="createdate" column="createdate"/>
+        </association>
+    </resultMap>
+    <select id="getCarDetail" resultMap="CarResultMap">
+        SELECT
+            c.id AS car_id,
+            cd.id AS detail_id,
+            cd.count,
+            g.id AS good_id,
+            g.gname,
+            g.description,
+            g.price,
+            g.stock,
+            g.imgPath,
+            g.gstatus,
+            g.kid,
+            g.createdate
+        FROM
+            car c
+                INNER JOIN
+            car_detail cd ON c.id = cd.cid
+                INNER JOIN
+            goods g ON cd.gid = g.id
+        WHERE
+            c.uid = #{uid}
+    </select>
+    <select id="getCount" resultType="int">
+        SELECT
+            count(1)
+        FROM
+            car c
+                INNER JOIN
+            car_detail cd ON c.id = cd.cid
+                INNER JOIN
+            goods g ON cd.gid = g.id
+        WHERE
+            c.uid = #{uid}
+    </select>
+    <insert id="addCarDetail" parameterType="map">
+    insert into car_detail(cid, gid, count) values(#{cid},#{gid},#{count})
+    </insert>
+    <update id="change" parameterType="CarDetail">
+        update car_detail set count=#{count} where id=#{id}
+    </update>
+    <delete id="del">
+        delete
+        from car_detail
+        where id=#{id};
+    </delete>
+</mapper>
