@@ -45,10 +45,10 @@ public class OrderController {
     @RequestMapping("create")
     @ResponseBody
     @CrossOrigin
-    public ResponseMessage create(String carDetails,String loginName){
+    public ResponseMessage create(String carDetails,String loginName,Integer id){
         logger.info("orderController create start carDetails:"+carDetails);
         List<CarDetail> carDetailList = JSON.parseArray(carDetails, CarDetail.class);
-        ResponseMessage responseMessage = orderService.create(carDetailList,loginName);
+        ResponseMessage responseMessage = orderService.create(carDetailList,loginName,id);
         logger.debug("orderService create carDetailList:"+carDetailList+"loginName:"+loginName+",responseMessage:"+responseMessage);
         return responseMessage;
     }

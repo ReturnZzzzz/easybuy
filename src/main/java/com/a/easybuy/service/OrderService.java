@@ -12,7 +12,7 @@ public interface OrderService  {
     public ResponseMessage getByPage(Integer pageNow, Integer pageSize);
     public ResponseMessage getByPage(Integer uid,Integer pageNow, Integer pageSize);
     public ResponseMessage getOne(Map<String,Object> map);
-    public ResponseMessage create(List<CarDetail> carDetails,String loginName);
+    public ResponseMessage create(List<CarDetail> carDetails,String loginName,Integer uid);
     public ResponseMessage pay(Integer id);
     public ResponseMessage finish(Integer id);
     public ResponseMessage close(Integer id);

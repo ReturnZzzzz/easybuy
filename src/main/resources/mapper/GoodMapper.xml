@@ -29,7 +29,7 @@
         values(#{gname},#{description},#{price},#{stock},#{imgPath},#{createdate},1,#{kid})
     </insert>
     <update id="update" parameterType="Good">
-        update goods set gname=#{name},description=#{description=},price=#{price},stock=#{stock},imgPath=#{imgPath},createdate = #{createDate}
+        update goods set gname=#{gname},description=#{description},price=#{price},stock=#{stock},imgPath=#{imgPath}
         where id = #{id} and gstatus=1
     </update>
     <update id="delete" >

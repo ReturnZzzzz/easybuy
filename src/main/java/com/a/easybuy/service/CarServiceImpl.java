@@ -128,10 +128,11 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public ResponseMessage getDetailsByUid() {
+    public ResponseMessage getDetailsByUid(Integer uid) {
         logger.info("CarServiceImpl getCarList start...");
         ResponseMessage rm = new ResponseMessage();
-        Car car = (Car) carMapper.getCarDetail(18);
+        Car car = new Car();
+        car.setList(carMapper.getCarDetail(uid));
         if(car!=null){
             rm.setCode("200");
             rm.setData(car);

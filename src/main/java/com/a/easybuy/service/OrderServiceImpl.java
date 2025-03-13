@@ -86,7 +86,7 @@ public class OrderServiceImpl implements  OrderService{
     }
 
     @Override
-    public ResponseMessage create(List<CarDetail> carDetails,String loginName) {
+    public ResponseMessage create(List<CarDetail> carDetails,String loginName,Integer uid) {
         logger.info("create carDetails:{}", carDetails);
         String code = UUID.randomUUID().toString();
         String orderCode = code.replaceAll("-","");
@@ -117,6 +117,7 @@ public class OrderServiceImpl implements  OrderService{
         order.setList(orderDetails);
         order.setTotal(total);
         order.setAdress("111");
+        order.setUid(uid);
         order.setCreateDate(new Date());
         ResponseMessage responseMessage = new ResponseMessage();
         int count = orderMapper.reload(order);

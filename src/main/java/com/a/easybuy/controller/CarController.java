@@ -72,11 +72,12 @@ public class CarController {
         return responseMessage;
     }
 
-    @RequestMapping("getDetailsByUid")
+    @RequestMapping("/getDetailsByUid")
     @ResponseBody
-    public ResponseMessage getDetailsByUid(){
-        logger.info("CarController getDetailsByUid start...");
-        return carService.getDetailsByUid();
+    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage getDetailsByUid(String uid){
+        logger.info("CarController getDetailsByUid start...uid:"+uid);
+        return carService.getDetailsByUid(Integer.parseInt(uid));
     }
 
     @RequestMapping("changeCount")

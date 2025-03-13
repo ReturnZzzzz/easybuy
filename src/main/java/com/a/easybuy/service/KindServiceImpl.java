@@ -260,7 +260,7 @@ private KindMapper kindMapper;
         List<Kind> twoKind = (List<Kind>) rm.getData();
         Kind kind1 = kindMapper.getKindById(id);
         allKind.add(kind1);
-        if(!kind1.getChildren().isEmpty()){
+        if(kind1.getChildren()!=null&&!kind1.getChildren().isEmpty()){
             for(Kind kind2:twoKind){
                 allKind.add(kind2);
                 if(!kind2.getChildren().isEmpty()){

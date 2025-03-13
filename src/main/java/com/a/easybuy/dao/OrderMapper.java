@@ -18,4 +18,5 @@ public interface OrderMapper {
     public int decrease(Map<String, Object> map);
     public int rollback(Map<String, Object> map);
     public List<OrderDetail> getOrderDetail(int id);
+    public int pay(Order order);
 }

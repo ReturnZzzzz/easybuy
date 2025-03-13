@@ -81,4 +81,7 @@
     <update id="update" parameterType="map">
         update `order` set status = #{status} where id=#{id} and status=1
     </update>
+    <update id="pay" parameterType="Order">
+        update `order` set status = #{status} where orderCode=#{orderCode} and status=1
+    </update>
 </mapper>
