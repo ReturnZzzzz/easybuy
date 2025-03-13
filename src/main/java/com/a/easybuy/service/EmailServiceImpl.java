@@ -20,7 +20,7 @@ public class EmailServiceImpl implements EmailService {
      */
     public void sendSimpleMail(String to, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("1807280694@qq.com"); // 必须与配置的username一致
+        message.setFrom("1290666022@qq.com"); // 必须与配置的username一致
         message.setTo(to);
         message.setSubject(subject);
         message.setText(content);

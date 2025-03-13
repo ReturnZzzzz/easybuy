@@ -92,4 +92,18 @@ public class KindController {
         logger.info("KindController addKind start...id"+id);
         return  kindService.getTwoThirdChild(Integer.parseInt(id));
     }
+
+    @RequestMapping("getFirstKindList")
+    @ResponseBody
+    public ResponseMessage getFirstKindList(){
+        logger.info("KindController addKind start...");
+        return  kindService.getFirstKindList();
+    }
+
+    @RequestMapping("getAllGoodsByFirstId")
+    @ResponseBody
+    public ResponseMessage getAllGoodsByFirstId(String id){
+        logger.info("KindController addKind start...id"+id);
+        return kindService.getAllGoodsByFirstId(Integer.parseInt(id));
+    }
 }

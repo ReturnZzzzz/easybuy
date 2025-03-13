@@ -15,4 +15,5 @@ public interface KindMapper {
     Kind getKindByName(String name);
     Kind getKindByPid(Integer pid);
     List<Kind> getChildKind(Integer id);
+    List<Kind> getFirstKindList();
 }

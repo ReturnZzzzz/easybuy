@@ -18,7 +18,7 @@
         select * from kind where pid = #{id}
     </select>
     <select id="getKindById" resultType="kind">
-        select * from kind where id = #{id}
+        select * from kind where id = #{id} and statu = 1
     </select>
     <select id="getGoodListBykid" resultType="Good">
         select * from goods where kid=#{id} limit 8
@@ -36,4 +36,7 @@
     <update id="changeKind">
         update kind set name=#{name},pid=#{pid},level=#{level} where id=#{id}
     </update>
+    <select id="getFirstKindList" resultType="Kind">
+        select * from kind where level=1 and statu = 1
+    </select>
 </mapper>

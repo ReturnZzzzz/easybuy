@@ -20,4 +20,7 @@ public interface KindService {
     ResponseMessage checkKindName(String name);
     ResponseMessage getChildKind(Integer id);
     ResponseMessage getTwoThirdChild(Integer id);
+    ResponseMessage getFirstKindList();
+
+    ResponseMessage getAllGoodsByFirstId(Integer id);
 }
