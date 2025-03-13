@@ -126,4 +126,51 @@ public class CarServiceImpl implements CarService {
         }
         return rm;
     }
+
+    @Override
+    public ResponseMessage getDetailsByUid() {
+        logger.info("CarServiceImpl getCarList start...");
+        ResponseMessage rm = new ResponseMessage();
+        Car car = (Car) carMapper.getCarDetail(18);
+        if(car!=null){
+            rm.setCode("200");
+            rm.setData(car);
+        }else{
+            rm.setCode("201");
+        }
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage addCarDetail(CarDetail carDetail, Integer uid) {
+        logger.info("CarServiceImpl addCarDetail start... carDetail:"+carDetail);
+        ResponseMessage rm = new ResponseMessage();
+        Map<String,Object> map=new HashMap<>();
+        Integer cid=getCidByUid(uid);
+        int isAlive=carMapper.checkGoodsIsAlive(carDetail.getGid(),cid);
+        if(isAlive>0){
+            rm.setCode("205");
+            rm.setMsg("该商品以存在购物车!");
+            return rm;
+        }
+        map.put("cid",cid);
+        map.put("gid",carDetail.getGid());
+        map.put("count",carDetail.getCount());
+        int count = carMapper.addCarDetail(map);
+        if(count>0){
+            rm.setCode("200");
+            rm.setMsg("添加成功!");
+        }else {
+            rm.setCode("201");
+            rm.setMsg("添加失败!");
+        }
+        return rm;
+    }
+
+    @Override
+    public Integer getCidByUid(Integer uid) {
+        logger.info("CarServiceImpl getCidByUid start... uid:"+uid);
+        Integer cid=carMapper.getCidByUid(uid);
+        return cid;
+    }
 }

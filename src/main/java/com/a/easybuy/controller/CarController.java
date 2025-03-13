@@ -71,4 +71,21 @@ public class CarController {
         logger.debug("CarController getGoodsInCar...responseMessage"+responseMessage);
         return responseMessage;
     }
+
+    @RequestMapping("getDetailsByUid")
+    @ResponseBody
+    public ResponseMessage getDetailsByUid(){
+        logger.info("CarController getDetailsByUid start...");
+        return carService.getDetailsByUid();
+    }
+
+    @RequestMapping("changeCount")
+    @ResponseBody
+    public ResponseMessage change(String id,String count){
+        logger.info("CarController getGoodsInCar start... id:"+id+"count"+count);
+        CarDetail carDetail = new CarDetail();
+        carDetail.setId(Integer.parseInt(id));
+        carDetail.setCount(Integer.parseInt(count));
+        return carService.change(carDetail);
+    }
 }

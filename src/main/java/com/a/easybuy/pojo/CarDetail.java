@@ -4,7 +4,16 @@ public class CarDetail {
     private int id;
     private Good good;
     private int count;
+    private Integer gid;
     private int cid;
+
+    public Integer getGid() {
+        return gid;
+    }
+
+    public void setGid(Integer gid) {
+        this.gid = gid;
+    }
 
     public int getCid() {
         return cid;

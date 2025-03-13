@@ -69,4 +69,13 @@
         from car_detail
         where id=#{id};
     </delete>
+    <select id="checkGoodsIsAlive" resultType="int">
+        select count(1) from car_detail where gid=#{gid} and cid=#{cid}
+    </select>
+    <select id="getCidByUid" resultType="Integer">
+        select id as cid from car where uid=#{uid}
+    </select>
+    <select id="getGoodByCid" resultType="Goods">
+        select * from goods where cid=#{cid}
+    </select>
 </mapper>
