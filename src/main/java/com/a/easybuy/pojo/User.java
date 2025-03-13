@@ -2,6 +2,7 @@ package com.a.easybuy.pojo;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class User implements Serializable {
 
@@ -14,7 +15,15 @@ public class User implements Serializable {
   private String phone;
   private long role;
   private boolean checked;
+  private Date regDate;
 
+  public Date getRegDate() {
+    return regDate;
+  }
+
+  public void setRegDate(Date regDate) {
+    this.regDate = regDate;
+  }
 
   public Integer getId() {
     return id;

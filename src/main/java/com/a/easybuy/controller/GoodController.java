@@ -49,8 +49,29 @@ public class GoodController {
     @RequestMapping("update")
     @ResponseBody
     @CrossOrigin("http://localhost:8080")
-    public ResponseMessage updateGood(Good good) {
+    public ResponseMessage updateGood(Good good,@RequestParam(value = "file", required = false) MultipartFile mf) throws IOException {
         logger.info("goodService.updateGood"+good);
+        if (mf!=null && mf.getOriginalFilename()!=null) {
+            String fileName = mf.getOriginalFilename();
+            String extension = FilenameUtils.getExtension(fileName);
+            String[] fileExtensionArr = { "jpg", "gif", "png" };
+            boolean isOk = false;
+            for (String fileExtension : fileExtensionArr) {
+                if (fileExtension.equals(extension)) {
+                    isOk = true;
+                    break;
+                }
+            }
+            if (!isOk) {
+                ResponseMessage responseMessage = new ResponseMessage();
+                responseMessage.setCode("300");
+                return responseMessage;
+            }
+            String newFileName = UUID.randomUUID() + "." + extension;
+            good.setImgPath(newFileName);
+            mf.transferTo(new File("D:" + File.separator + "image" + File.separator + newFileName));
+        }
+        good.setGstatus(1);
         ResponseMessage responseMessage =goodService.updateGood(good);
         logger.debug("goodService.updateGood"+responseMessage);
         return responseMessage;
