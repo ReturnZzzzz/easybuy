@@ -1,5 +1,6 @@
 package com.a.easybuy.service;
 
+import com.alipay.api.domain.Goods;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.a.easybuy.dao.KindMapper;
@@ -238,6 +239,43 @@ private KindMapper kindMapper;
             kind.setChildren(kindMapper.getChildKind(kind.getId()));
         }
         rm.setData(twoList);
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage getFirstKindList() {
+        logger.info("KindServiceImpl  getTwoThirdChild start...");
+        ResponseMessage rm = new ResponseMessage();
+        List<Kind> firstKind = kindMapper.getFirstKindList();
+        rm.setData(firstKind);
+        return rm;
+    }
+
+    @Override
+    public ResponseMessage getAllGoodsByFirstId(Integer id) {
+        logger.info("KindServiceImpl  getTwoThirdChild start...id"+id);
+        ResponseMessage rm = getTwoThirdChild(id);
+        List<Kind> allKind = new ArrayList<>();
+        List<Good> allGoods = new ArrayList<>();
+        List<Kind> twoKind = (List<Kind>) rm.getData();
+        Kind kind1 = kindMapper.getKindById(id);
+        allKind.add(kind1);
+        if(!kind1.getChildren().isEmpty()){
+            for(Kind kind2:twoKind){
+                allKind.add(kind2);
+                if(!kind2.getChildren().isEmpty()){
+                    allKind.addAll(kind2.getChildren());
+                }
+            }
+        }
+        for(Kind kind4:allKind){
+            List<Good> findList = kindMapper.getGoodListBykid(kind4.getId());
+            if(!findList.isEmpty()){
+                allGoods.addAll(findList);
+            }
+
+        }
+        rm.setData(allGoods);
         return rm;
     }
 }
