@@ -45,11 +45,13 @@ public class UserServiceImpl implements UserService{
             if (user.getPassword().equals(password)) {
                 responseMessage.setCode("200");
                 User userTemp = new User();
+                userTemp.setName(user.getName());
                 userTemp.setUserName(userName);
                 userTemp.setId(user.getId());
                 userTemp.setRole(user.getRole());
+                redisTemplate.opsForValue().set(user.getName(),JSON.toJSONString(userTemp),30, TimeUnit.MINUTES);
                 responseMessage.setData(userTemp);
-                redisTemplate.opsForValue().set(userName, JSON.toJSONString(user),30, TimeUnit.MINUTES);
+//                redisTemplate.opsForValue().set(userName, JSON.toJSONString(user),30, TimeUnit.MINUTES);
             }else {
                 responseMessage.setCode("201");
                 responseMessage.setMsg("密码错误");

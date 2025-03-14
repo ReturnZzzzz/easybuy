@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("user")
-public class UserController {
+public class    UserController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

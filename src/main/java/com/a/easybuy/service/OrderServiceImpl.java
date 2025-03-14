@@ -106,6 +106,7 @@ public class OrderServiceImpl implements  OrderService{
             orderDetail.setCount(carDetail.getCount());
             Map<String,Object> params = new HashMap<>();
             params.put("gid",orderDetail.getGid());
+            orderMapper.delInCar(params);
             params.put("count",orderDetail.getCount());
             orderMapper.decrease(params);
             orderDetail.setOid(order.getId());

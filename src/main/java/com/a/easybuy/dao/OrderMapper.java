@@ -19,4 +19,5 @@ public interface OrderMapper {
     public int rollback(Map<String, Object> map);
     public List<OrderDetail> getOrderDetail(int id);
     public int pay(Order order);
+    public int delInCar(Map<String, Object> map);
 }
