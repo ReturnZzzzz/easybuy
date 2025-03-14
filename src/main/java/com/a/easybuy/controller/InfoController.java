@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @CrossOrigin
+@RequestMapping("info")
 public class InfoController {
 //    private Logger logger = LoggerFactory.getLogger(getClass());
 //    @Autowired

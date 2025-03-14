@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @CrossOrigin
+@RequestMapping("kind")
 public class KindController {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
