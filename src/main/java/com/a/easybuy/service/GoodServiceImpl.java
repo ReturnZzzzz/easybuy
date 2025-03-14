@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class GoodServiceImpl implements  GoodService {
@@ -107,5 +104,26 @@ public class GoodServiceImpl implements  GoodService {
             responseMessage.setCode("201");
         }
         return responseMessage;
+    }
+
+    @Override
+    public ResponseMessage getMin(String id1, String id2, String id3) {
+        logger.info("getMin query:"+id1+",pageNow:"+id2+",pageSize:"+id3);
+        ResponseMessage responseMessage = new ResponseMessage();
+        List<String> ids = new ArrayList<>();
+        int min = 10000;
+        for (String id : ids) {
+            int count = goodMapper.getStock(Integer.valueOf(id));
+            if(count<min){
+                min=count;
+            }
+        }
+        if (min>0){
+            responseMessage.setCode("200");
+            responseMessage.setData(min);
+        }else {
+            responseMessage.setCode("201");
+        }
+        return responseMessage  ;
     }
 }

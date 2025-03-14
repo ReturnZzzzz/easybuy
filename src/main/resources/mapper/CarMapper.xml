@@ -75,4 +75,7 @@
     <select id="getCidByUid" resultType="Integer">
         select id as cid from car where uid=#{uid}
     </select>
+    <select id="getStock">
+        select stock  from goods where id=#{id}
+    </select>
 </mapper>

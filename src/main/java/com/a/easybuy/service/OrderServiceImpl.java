@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.*;
 
 @Service
-//@Transactional
+@Transactional
 public class OrderServiceImpl implements  OrderService{
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());

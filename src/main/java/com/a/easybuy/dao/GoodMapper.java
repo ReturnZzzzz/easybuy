@@ -2,6 +2,7 @@ package com.a.easybuy.dao;
 
 import com.a.easybuy.pojo.Good;
 import com.a.easybuy.pojo.GoodsQuery;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -14,4 +15,5 @@ public interface GoodMapper {
     public int delete(Integer id);
     public Good getById(Map<String,Object> params);
     Good getGoodById(Integer id);
+    int getStock(@Param("id") Integer id);
 }

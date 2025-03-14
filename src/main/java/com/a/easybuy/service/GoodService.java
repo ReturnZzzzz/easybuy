@@ -10,4 +10,5 @@ public interface GoodService {
     public ResponseMessage deleteGood(int id);
     public ResponseMessage getGood(int id);
     public ResponseMessage getGoodsByPage(GoodsQuery query, int pageNum, int pageSize);
+    public ResponseMessage getMin(String id1, String id2, String id3);
 }

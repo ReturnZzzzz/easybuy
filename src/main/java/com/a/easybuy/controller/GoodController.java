@@ -143,4 +143,12 @@ public class GoodController {
             }
         }
     }
+    @RequestMapping("getmin")
+    @ResponseBody
+    @CrossOrigin("http://localhost:8080")
+    public ResponseMessage getmin(String id1, String id2, String id3) {
+        ResponseMessage responseMessage = goodService.getMin(id1,id2,id3);
+        return responseMessage;
+    }
+
 }
